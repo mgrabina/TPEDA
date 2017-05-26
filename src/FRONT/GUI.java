@@ -3,8 +3,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
+
+import Controller.Listeners;
 
 public class GUI {
 	static JFrame ventana;
@@ -36,7 +40,8 @@ public class GUI {
 				casilleros[i][j].add(new JLabel(i+" "+j));				
 				casilleros[i][j].setSize(TAMANIOCASILLERO,TAMANIOCASILLERO);
 				casilleros[i][j].setLocation(new Point(i*TAMANIOCASILLERO, j*TAMANIOCASILLERO));
-				casilleros[i][j].setBackground(BACKGROUNDCOLOR);;
+				casilleros[i][j].setBackground(BACKGROUNDCOLOR);
+				casilleros[i][j].addMouseListener(new MyListener(i,j));
 				ventana.add(casilleros[i][j]);
 			}
 		ventana.setVisible(true);
