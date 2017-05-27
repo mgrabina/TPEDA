@@ -1,8 +1,7 @@
 package back;
 
 public class Tablero {
-	
-	private Ficha[][] tablero = new Ficha[13][13]; 
+	private Ficha[][] tablero = new Ficha[13][13];
 	
 	public Tablero(){
 		

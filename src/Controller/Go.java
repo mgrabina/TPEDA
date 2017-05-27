@@ -1,4 +1,7 @@
-package back;
+package Controller;
+
+import back.Jugador;
+import back.Tablero;
 
 public class Go {
 

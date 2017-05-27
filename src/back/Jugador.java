@@ -32,5 +32,4 @@ public class Jugador {
 	public boolean esMaquina(){
 		return maquina;
 	}
-	
 }
