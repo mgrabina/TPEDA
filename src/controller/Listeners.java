@@ -16,7 +16,9 @@ public class Listeners {
 	public static void llamadaDeCasillero(int fil, int col){
 		if(game.validarMovimiento(fil, col, game.getNext().getColor())){
 			GUI.ponerFicha(((game.getNext().getColor()==1)?true:false), fil, col);
+			game.getTablero().agregarFicha(game.getNext().getColor(), fil, col);
 			game.setNext((game.getNext().esMaquina()==true)?game.getPersona():game.getMaquina());
+			
 		}
 	}
 }
