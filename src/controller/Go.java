@@ -1,9 +1,9 @@
 package controller;
 
-import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import back.*;
-import java.util.Map;
 
 import back.Jugador;
 import back.Tablero;
@@ -59,16 +59,17 @@ public class Go {
 	}
 
 	private boolean esSuicidio(int fila, int columna, Jugador j) {
-		Map<Integer, Integer> marcados = new HashMap<Integer, Integer>();	//i == key ; j == value;
+		List<Ficha> marcados = new LinkedList<Ficha>();
 		
 		boolean r = tieneLibertad(fila, columna, j.getColor(), marcados);
 		
-		//desmarcar();
+		for(Ficha f : marcados)
+			tablero.getFicha(f.getFila(), f.getColumna()).setColor(!f.getColor());
 		
 		return r;
 	}
 
-	private boolean tieneLibertad(int fila, int columna, boolean color, Map<Integer, Integer> marcados) {
+	private boolean tieneLibertad(int fila, int columna, boolean color, List<Ficha> marcados) {
 		if(fila == 0 && columna == 0){
 			Ficha f1 = tablero.getFicha(fila + 1, columna);
 			Ficha f2 = tablero.getFicha(fila, columna + 1);
@@ -80,22 +81,136 @@ public class Go {
 			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
 				return false;
 			
-			marcados.put(fila, columna);
+			marcados.add(new Ficha(color, fila, columna));
 			tablero.getFicha(fila, columna).setColor(!color);
 			
 			if(f1 != null && f1.getColor() == color)
-				r = r && tieneLibertad(fila + 1, columna, color, marcados);
+				r = tieneLibertad(fila + 1, columna, color, marcados);
 			
 			if(r)
 				return true;
 			
 			if(f2 != null && f2.getColor() == color)
-				r = r && tieneLibertad(fila, columna + 1, color, marcados);
+				r = tieneLibertad(fila, columna + 1, color, marcados);
 			
 			return r;			
 		}
 		
-		return true;
+		if(fila == 12 && columna == 0){
+			Ficha f1 = tablero.getFicha(fila - 1, columna);
+			Ficha f2 = tablero.getFicha(fila, columna + 1);
+			boolean r = true;
+			
+			if(f1 == null || f2 == null)
+				return true;
+			
+			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
+				return false;
+			
+			marcados.add(new Ficha(color, fila, columna));
+			tablero.getFicha(fila, columna).setColor(!color);
+			
+			if(f1 != null && f1.getColor() == color)
+				r = tieneLibertad(fila - 1, columna, color, marcados);
+			
+			if(r)
+				return true;
+			
+			if(f2 != null && f2.getColor() == color)
+				r = tieneLibertad(fila, columna + 1, color, marcados);
+			
+			return r;			
+		}
 		
+		if(fila == 12 && columna == 12){
+			Ficha f1 = tablero.getFicha(fila - 1, columna);
+			Ficha f2 = tablero.getFicha(fila, columna - 1);
+			boolean r = true;
+			
+			if(f1 == null || f2 == null)
+				return true;
+			
+			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
+				return false;
+			
+			marcados.add(new Ficha(color, fila, columna));
+			tablero.getFicha(fila, columna).setColor(!color);
+			
+			if(f1 != null && f1.getColor() == color)
+				r = tieneLibertad(fila - 1, columna, color, marcados);
+			
+			if(r)
+				return true;
+			
+			if(f2 != null && f2.getColor() == color)
+				r = tieneLibertad(fila, columna - 1, color, marcados);
+			
+			return r;			
+		}
+		
+		if(fila == 0 && columna == 12){
+			Ficha f1 = tablero.getFicha(fila + 1, columna);
+			Ficha f2 = tablero.getFicha(fila, columna - 1);
+			boolean r = true;
+			
+			if(f1 == null || f2 == null)
+				return true;
+			
+			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
+				return false;
+			
+			marcados.add(new Ficha(color, fila, columna));
+			tablero.getFicha(fila, columna).setColor(!color);
+			
+			if(f1 != null && f1.getColor() == color)
+				r = tieneLibertad(fila + 1, columna, color, marcados);
+			
+			if(r)
+				return true;
+			
+			if(f2 != null && f2.getColor() == color)
+				r = tieneLibertad(fila, columna - 1, color, marcados);
+			
+			return r;			
+		}
+		
+		Ficha f1 = tablero.getFicha(fila + 1, columna);
+		Ficha f2 = tablero.getFicha(fila - 1, columna);
+		Ficha f3 = tablero.getFicha(fila, columna + 1);
+		Ficha f4 = tablero.getFicha(fila, columna - 1);
+		boolean r = true;
+		
+		if(f1 == null || f2 == null || f3 == null || f4 == null)
+			return true;
+		
+		if(f1 != null && f2 != null && f3 != null && f4 != null && f1.getColor() != color && f2.getColor() != color && f3.getColor() != color && f4.getColor() != color)
+			return false;
+		
+		marcados.add(new Ficha(color, fila, columna));
+		tablero.getFicha(fila, columna).setColor(!color);
+		
+		if(f1 != null && f1.getColor() == color)
+			r = tieneLibertad(fila + 1, columna, color, marcados);
+		
+		if(r)
+			return true;
+		
+		if(f2 != null && f2.getColor() == color)
+			r = tieneLibertad(fila - 1, columna, color, marcados);
+		
+		if(r)
+			return true;
+		
+		if(f3 != null && f3.getColor() == color)
+			r = tieneLibertad(fila, columna + 1, color, marcados);
+		
+		if(r)
+			return true;
+		
+		if(f4 != null && f4.getColor() == color)
+			r = tieneLibertad(fila, columna - 1, color, marcados);
+		
+		return r;	
 	}
 }
+

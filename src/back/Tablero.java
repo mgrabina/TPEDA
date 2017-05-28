@@ -9,7 +9,7 @@ public class Tablero {
 	
 	public boolean agregarFicha(Jugador jug, int fil, int col){
 		if(tablero[fil][col] == null){
-			tablero[fil][col] = new Ficha(jug.getColor());
+			tablero[fil][col] = new Ficha(jug.getColor(), fil, col);
 			return true;
 		}
 		
