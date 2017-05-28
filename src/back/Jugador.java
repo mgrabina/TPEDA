@@ -5,14 +5,15 @@ public class Jugador {
 	private String nombre;
 	private int puntos;
 	private boolean maquina;
-	private int color;
-	public Jugador(String nombre, boolean maquina,int color){
+	private boolean color;
+	
+	public Jugador(String nombre, boolean maquina, boolean color){
 		this.nombre = nombre;
 		this.maquina = maquina;
 		this.color=color;
 	}
 	
-	public int getColor() {
+	public boolean getColor() {
 		return color;
 	}
 

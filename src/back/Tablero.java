@@ -7,7 +7,7 @@ public class Tablero {
 		
 	}
 	
-	public boolean agregarFicha(int color, int fil, int col){
+	public boolean agregarFicha(boolean color, int fil, int col){
 		if(tablero[fil][col] == null){
 			tablero[fil][col] = new Ficha(color);
 			return true;
@@ -16,11 +16,18 @@ public class Tablero {
 		return false;
 	}
 	
-	public boolean comerFicha(int color, int fil, int col){
+	public boolean comerFicha(boolean color, int fil, int col){
 		if(tablero[fil][col] == null || tablero[fil][col].getColor() == color)
 			return false;
 		
 		tablero[fil][col].setColor(color);
 		return true;
+	}
+	
+	public Ficha getFicha(int fila, int columna){
+		if(tablero[fila][columna] == null)
+			return null;
+		
+		return tablero[fila][columna];
 	}
 }
