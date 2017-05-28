@@ -42,7 +42,7 @@ public class Go {
 	
 	public boolean mover(int fila, int columna, Jugador j){
 		if(validarMovimiento(fila, columna, j)){
-			tablero.agregarFicha(j.getColor(), columna, fila);
+			tablero.agregarFicha(j, columna, fila);
 			return true;
 		}
 		
