@@ -1,4 +1,4 @@
-package FRONT;
+package front;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
-import Controller.Listeners;
+import controller.Listeners;
 
 public class GUI {
 	static JFrame ventana;

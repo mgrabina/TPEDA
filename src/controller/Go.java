@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import back.Jugador;
 import back.Tablero;

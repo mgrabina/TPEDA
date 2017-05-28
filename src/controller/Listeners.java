@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
 import com.sun.java.swing.plaf.windows.resources.windows_zh_TW;
 
-import FRONT.GUI;
+import front.GUI;
 
 public class Listeners {
 

@@ -1,8 +1,8 @@
-package FRONT;
+package front;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import Controller.Listeners;
+import controller.Listeners;
 public class MyListener implements MouseListener {
 	private Integer x,y;
 	
