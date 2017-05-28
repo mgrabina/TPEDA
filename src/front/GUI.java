@@ -20,7 +20,7 @@ public class GUI {
 	public static final Integer TAMANIOCASILLERO=ALTO/TAMANIO;
 	public static final Color BACKGROUNDCOLOR = Color.CYAN;
 	
-	public static void main(String[] args) {
+	public static void iniciar() {
 		Integer i,j;
 		ventana = new JFrame("GO EDA!");
 		ventana.setSize(ALTO, ALTO);
@@ -50,7 +50,7 @@ public class GUI {
 		if(color)
 			casilleros[i][j].setBackground(Color.white);
 		else
-			casilleros[i][j].setBackground(Color.white);
+			casilleros[i][j].setBackground(Color.RED);
 	}
 	public static void sacarFicha(int i, int j){
 		casilleros[i][j].setBackground(BACKGROUNDCOLOR);

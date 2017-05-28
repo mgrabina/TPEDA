@@ -5,13 +5,34 @@ import back.Tablero;
 
 public class Go {
 
-	Jugador maquina = new Jugador("Maquina", true);
-	Jugador persona;
-	Jugador next;
-	Tablero tablero = new Tablero();
+	private Jugador maquina = new Jugador("Maquina", true,1);
+	private Jugador persona;
+	private Jugador next;
+	private Tablero tablero = new Tablero();
 	
+	public Jugador getNext() {
+		return next;
+	}
+
+	public void setNext(Jugador next) {
+		this.next = next;
+	}
+
+	public Jugador getMaquina() {
+		return maquina;
+	}
+
+	public Jugador getPersona() {
+		return persona;
+	}
+
+	public Tablero getTablero() {
+		return tablero;
+	}
+
 	public Go(String persona){
-		this.persona = new Jugador(persona, false);
+		this.persona = new Jugador(persona, false,0);
+		next=this.persona;
 	}
 	
 	public boolean mover(int fila, int columna, int color){
@@ -29,11 +50,11 @@ public class Go {
 
 	private boolean esKo(int fila, int columna, int color) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	private boolean esSuicidio(int fila, int columna, int color) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 }
