@@ -397,7 +397,7 @@ public class Go {
 		while(!cola.isEmpty()){
 			Tree aux = cola.dequeue();
 			for (int i=0 ; i<aux.children.size();i++) {
-				writer.println(aux.value +" -- "+ ((Tree)aux.children.get(i)).value);
+				writer.println(aux.value +" -- "+ ((Tree)aux.children.get(i)).value + ";");
 				cola.enqueue((Tree) aux.children.get(i));
 			}
 		}
