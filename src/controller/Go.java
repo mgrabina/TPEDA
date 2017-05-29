@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -377,6 +379,25 @@ public class Go {
 			r = tieneLibertad(fila, columna - 1, color, marcados);
 		
 		return r;	
+	}
+	
+	
+	private class Tree<T>{
+		T value;
+		ArrayList<Tree<T>> children;
+		public Tree(T value) {
+			this.value = value;
+			children = new ArrayList<Tree<T>>();
+		}
+		public void AddChild(T value){
+			children.add(new Tree<T>(value));
+		}
+		public void removeChild(T value){
+			for (Tree<T> tree : children) {
+				if(tree.value.equals(value))
+					children.remove(tree);
+			}	
+		}
 	}
 }
 
