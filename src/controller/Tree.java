@@ -31,7 +31,7 @@ public class Tree<T> {
 		Tree<T> arbol = this;
 		//Reemplaza el archivo si ya existe.
 		PrintWriter writer = new PrintWriter("tree.dot");
-		writer.println("graph tree{");
+		writer.println("digraph tree{");
 		//Recorro por nivel, visito una vez cada nodo
 		Queue<Tree> cola = new Queue<Tree>();
 		Queue<Tree> cola2 = new Queue<Tree>();
@@ -60,15 +60,10 @@ public class Tree<T> {
 					}
 				}else{
 					flag=!flag;
-				}
-				
+				}	
 			}
-			
-			
 		}
 		writer.println("}");
 		writer.close();
 	}
-		
-	
 }
