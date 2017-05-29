@@ -41,6 +41,9 @@ public class Go {
 	}
 	
 	public boolean mover(int fila, int columna, Jugador j){
+		if(tablero.getFicha(fila, columna) != null)
+			return false;
+					
 		if(noEsKo(fila, columna, j)){
 			if(puedoComerFichas(fila, columna, j)){
 				tablero.agregarFicha(j, fila, columna); //habria que cambiar el orden de los parametros de este metodo para que esten todos igualitos :)
