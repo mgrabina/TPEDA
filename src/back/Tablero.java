@@ -16,12 +16,9 @@ public class Tablero {
 		return false;
 	}
 	
-	public boolean comerFicha(boolean color, int fil, int col){
-		if(tablero[fil][col] == null || tablero[fil][col].getColor() == color)
-			return false;
-		
-		tablero[fil][col].setColor(color);
-		return true;
+	public void comerFicha(int fil, int col){
+		tablero[fil][col] = null;
+		return;
 	}
 	
 	public Ficha getFicha(int fila, int columna){

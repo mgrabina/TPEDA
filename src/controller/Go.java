@@ -41,29 +41,55 @@ public class Go {
 	}
 	
 	public boolean mover(int fila, int columna, Jugador j){
-		if(validarMovimiento(fila, columna, j)){
-			tablero.agregarFicha(j, columna, fila);
+		if(noEsKo(fila, columna, j)){
+			if(puedoComerFichas(fila, columna, j)){
+				tablero.agregarFicha(j, fila, columna); //habria que cambiar el orden de los parametros de este metodo para que esten todos igualitos :)
+				comer(fila, columna, j);
+				return true;
+			}
+
+			if(noEsSuicidio(fila, columna, j)){
+				tablero.agregarFicha(j, fila, columna);
+				return true;
+			}
+		}
+		return false;
+	}
+		
+/*		if(validarMovimiento(fila, columna, j)){
+			tablero.agregarFicha(j, fila, columna);
 			return true;
 		}
 		
-		return false;
-	}
+		return false;*/
 	
-	public boolean validarMovimiento(int fila, int columna, Jugador j){
+
+/*	public boolean validarMovimiento(int fila, int columna, Jugador j){
 		//if(puedoComerFicha)
 		//		if(!esKo)
 		//			return true;
 		//		return false;
 		
-		return esSuicidio(fila, columna, j) && esKo(fila, columna, j);
+		return noEsSuicidio(fila, columna, j) && noEsKo(fila, columna, j);
+	}*/
+	
+	private void comer(int fila, int columna, Jugador j) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	private boolean esKo(int fila, int columna, Jugador j) {
+
+	private boolean puedoComerFichas(int fila, int columna, Jugador j) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean noEsKo(int fila, int columna, Jugador j) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
-	private boolean esSuicidio(int fila, int columna, Jugador j) {
+	private boolean noEsSuicidio(int fila, int columna, Jugador j) {
 		List<Ficha> marcados = new LinkedList<Ficha>();
 		
 		boolean r = tieneLibertad(fila, columna, j.getColor(), marcados);
