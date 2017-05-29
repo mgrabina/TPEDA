@@ -14,7 +14,7 @@ public class Listeners {
 
 
 	public static void llamadaDeCasillero(int fil, int col){
-		if(game.validarMovimiento(fil, col, game.getNext())){
+		if(game.mover(fil, col, game.getNext())){
 			agregarFicha(fil, col);
 			game.setNext((game.getNext().esMaquina()==true)?game.getPersona():game.getMaquina());
 		}else{
