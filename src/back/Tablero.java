@@ -27,4 +27,8 @@ public class Tablero {
 		
 		return tablero[fila][columna];
 	}
+	
+	
+	
+	
 }
