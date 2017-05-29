@@ -50,6 +50,11 @@ public class Go {
 	}
 	
 	public boolean validarMovimiento(int fila, int columna, Jugador j){
+		//if(puedoComerFicha)
+		//		if(!esKo)
+		//			return true;
+		//		return false;
+		
 		return esSuicidio(fila, columna, j) && esKo(fila, columna, j);
 	}
 
