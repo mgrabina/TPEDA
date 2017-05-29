@@ -1,6 +1,9 @@
 package controller;
 
 import front.*;
+
+import java.io.FileNotFoundException;
+
 import back.*;
 public class Main {
 	
@@ -9,6 +12,7 @@ public class Main {
 		Go game = new Go("Jugador");
 		Listeners listener= new Listeners(game);
 		GUI.iniciar();
+		
 		
 	}
 	

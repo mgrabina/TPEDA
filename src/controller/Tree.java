@@ -26,7 +26,7 @@ public class Tree<T> {
 				children.remove(tree);
 		}	
 	}
-	
+	//Genera un documento .dot diferenciando por niveles el jugador imprimiento el valor de los nodos del arbol
 	public void generarDOT() throws FileNotFoundException, InterruptedException{
 		Tree<T> arbol = this;
 		//Reemplaza el archivo si ya existe.
@@ -34,27 +34,36 @@ public class Tree<T> {
 		writer.println("graph tree{");
 		//Recorro por nivel, visito una vez cada nodo
 		Queue<Tree> cola = new Queue<Tree>();
-		Stack<Integer> stack = new Stack<Integer>();
+		Queue<Tree> cola2 = new Queue<Tree>();
 		cola.enqueue(arbol);
-		stack.push(0);
 		int level = 0, i;
-		while(!cola.isEmpty()){
-			Tree aux = cola.dequeue();
-			int current = stack.pop();
-			if(current == 0){
-				level++;
-				
+		boolean flag = true;
+		while(!(cola.isEmpty() && cola2.isEmpty())){
+			Tree aux;
+			if(flag){
+				if(!cola.isEmpty()){
+					aux = cola.dequeue();
+					for (i=0;i<aux.children.size();i++) {
+						writer.println(aux.value +" -> "+ ((Tree)aux.children.get(i)).value + ";");
+						cola2.enqueue(((Tree)aux.children.get(i)));
+					}
+				}else{
+					flag=!flag;
+				}
 			}else{
-				stack.push(current-1);
+				if(!cola2.isEmpty()){
+					aux = cola2.dequeue();
+					writer.println(aux.value + " [shape=box]");
+					for (i=0;i<aux.children.size();i++) {
+						writer.println(aux.value +" -> "+ ((Tree)aux.children.get(i)).value + ";");
+						cola.enqueue(((Tree)aux.children.get(i)));
+					}
+				}else{
+					flag=!flag;
+				}
+				
 			}
-			if(level%2==0)
-				writer.println(aux.value + " [shape=box]");
-			if(aux.children.size()!=0)
-				stack.add(aux.children.size());
-			for (i=0;i<aux.children.size();i++) {
-				writer.println(aux.value +" -> "+ ((Tree)aux.children.get(i)).value + ";");
-				cola.enqueue((Tree) aux.children.get(i));
-			}
+			
 			
 		}
 		writer.println("}");
