@@ -99,289 +99,62 @@ public class Go {
 
 	private boolean noEsSuicidio(int fila, int columna, Jugador j) {
 		List<Ficha> marcados = new LinkedList<Ficha>();
-		
-		boolean r = tieneLibertad(fila, columna, j.getColor(), marcados);
-		
-		for(Ficha f : marcados)
-			tablero.getFicha(f.getFila(), f.getColumna()).setColor(!f.getColor());
-		
-		return r;
+		tablero.agregarFicha(j, fila, columna);
+		boolean a=tieneLibertad(fila, columna, j.getColor(), marcados);
+		tablero.comerFicha(fila, columna);
+		return a;
 	}
 
-	private boolean tieneLibertad(int fila, int columna, boolean color, List<Ficha> marcados) {
-		if(fila == 0 && columna == 0){
-			Ficha f1 = tablero.getFicha(fila + 1, columna);
-			Ficha f2 = tablero.getFicha(fila, columna + 1);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila + 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila, columna + 1, color, marcados);
-			
-			return r;			
+	private boolean tieneLibertad(int fil, int col, boolean color, List<Ficha> marcados) {
+	
+		int izq, der, arr, abj;
+		Ficha f;
+		marcados.add(tablero.getFicha(fil, col));
+		izq = (col == 0)? 0 : 1;
+		der = (12 == col)? 0 : 1;
+		arr = (fil == 0)? 0 : 1;
+		abj = (12 == fil)? 0 : 1;
+		boolean flag;
+		for(int l=col - izq;l <= col + der ;l++){
+			f=tablero.getFicha(fil, l);
+			if(f!=null && f.getColor()==color && !marcados.contains(f)){
+				flag=tieneLibertad(fil, l, color, marcados);
+				if(flag)
+					return true;
+			}else
+				if(f==null){
+					System.out.println("llego");
+					return true;
+				}
+		}
+		if(arr==1){
+			f=tablero.getFicha(fil-1, col);
+			if(f!=null && f.getColor()==color && !marcados.contains(f)){
+				flag=tieneLibertad(fil-1,col, color, marcados);
+				if(flag)
+					return true;
+			}else
+				if(f==null){
+					System.out.println("llego");
+					return true;
+				}
+		}
+		if(abj==1){
+			f=tablero.getFicha(fil+1, col);
+			if(f!=null && f.getColor()==color && !marcados.contains(f)){
+				flag=tieneLibertad(fil+1,col, color, marcados);
+				if(flag)
+					return true;
+			}else
+				if(f==null){
+					System.out.println("llego");
+					return true;
+				}
 		}
 		
-		if(fila == 12 && columna == 0){
-			Ficha f1 = tablero.getFicha(fila - 1, columna);
-			Ficha f2 = tablero.getFicha(fila, columna + 1);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila - 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila, columna + 1, color, marcados);
-			
-			return r;			
-		}
 		
-		if(fila == 12 && columna == 12){
-			Ficha f1 = tablero.getFicha(fila - 1, columna);
-			Ficha f2 = tablero.getFicha(fila, columna - 1);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila - 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila, columna - 1, color, marcados);
-			
-			return r;			
-		}
 		
-		if(fila == 0 && columna == 12){
-			Ficha f1 = tablero.getFicha(fila + 1, columna);
-			Ficha f2 = tablero.getFicha(fila, columna - 1);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f1.getColor() != color && f2.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila + 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila, columna - 1, color, marcados);
-			
-			return r;			
-		}
-		
-		if(fila == 0){
-			Ficha f1 = tablero.getFicha(fila + 1, columna);
-			Ficha f2 = tablero.getFicha(fila, columna - 1);
-			Ficha f3 = tablero.getFicha(fila, columna + 1);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null || f3 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f3 != null && f1.getColor() != color && f2.getColor() != color && f3.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila + 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila, columna - 1, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f3 != null && f3.getColor() == color)
-				r = tieneLibertad(fila, columna + 1, color, marcados);
-			
-			return r;			
-		}
-		
-		if(fila == 12){
-			Ficha f1 = tablero.getFicha(fila - 1, columna);
-			Ficha f2 = tablero.getFicha(fila, columna - 1);
-			Ficha f3 = tablero.getFicha(fila, columna + 1);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null || f3 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f3 != null && f1.getColor() != color && f2.getColor() != color && f3.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila - 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila, columna - 1, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f3 != null && f3.getColor() == color)
-				r = tieneLibertad(fila, columna + 1, color, marcados);
-			
-			return r;			
-		}
-		
-		if(columna == 0){
-			Ficha f1 = tablero.getFicha(fila, columna + 1);
-			Ficha f2 = tablero.getFicha(fila - 1, columna);
-			Ficha f3 = tablero.getFicha(fila + 1, columna);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null || f3 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f3 != null && f1.getColor() != color && f2.getColor() != color && f3.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila, columna + 1, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila - 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f3 != null && f3.getColor() == color)
-				r = tieneLibertad(fila + 1, columna, color, marcados);
-			
-			return r;			
-		}
-		
-		if(columna == 12){
-			Ficha f1 = tablero.getFicha(fila, columna - 1);
-			Ficha f2 = tablero.getFicha(fila - 1, columna);
-			Ficha f3 = tablero.getFicha(fila + 1, columna);
-			boolean r = true;
-			
-			if(f1 == null || f2 == null || f3 == null)
-				return true;
-			
-			if(f1 != null && f2 != null && f3 != null && f1.getColor() != color && f2.getColor() != color && f3.getColor() != color)
-				return false;
-			
-			marcados.add(new Ficha(color, fila, columna));
-			tablero.getFicha(fila, columna).setColor(!color);
-			
-			if(f1 != null && f1.getColor() == color)
-				r = tieneLibertad(fila, columna - 1, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f2 != null && f2.getColor() == color)
-				r = tieneLibertad(fila - 1, columna, color, marcados);
-			
-			if(r)
-				return true;
-			
-			if(f3 != null && f3.getColor() == color)
-				r = tieneLibertad(fila + 1, columna, color, marcados);
-			
-			return r;			
-		}
-		
-		Ficha f1 = tablero.getFicha(fila + 1, columna);
-		Ficha f2 = tablero.getFicha(fila - 1, columna);
-		Ficha f3 = tablero.getFicha(fila, columna + 1);
-		Ficha f4 = tablero.getFicha(fila, columna - 1);
-		boolean r = true;
-		
-		if(f1 == null || f2 == null || f3 == null || f4 == null)
-			return true;
-		
-		if(f1 != null && f2 != null && f3 != null && f4 != null && f1.getColor() != color && f2.getColor() != color && f3.getColor() != color && f4.getColor() != color)
-			return false;
-		
-		marcados.add(new Ficha(color, fila, columna));
-		tablero.getFicha(fila, columna).setColor(!color);
-		
-		if(f1 != null && f1.getColor() == color)
-			r = tieneLibertad(fila + 1, columna, color, marcados);
-		
-		if(r)
-			return true;
-		
-		if(f2 != null && f2.getColor() == color)
-			r = tieneLibertad(fila - 1, columna, color, marcados);
-		
-		if(r)
-			return true;
-		
-		if(f3 != null && f3.getColor() == color)
-			r = tieneLibertad(fila, columna + 1, color, marcados);
-		
-		if(r)
-			return true;
-		
-		if(f4 != null && f4.getColor() == color)
-			r = tieneLibertad(fila, columna - 1, color, marcados);
-		
-		return r;	
+		return false;
 	}
 	void MINIMAX(){
 		
