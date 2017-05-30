@@ -22,7 +22,7 @@ public class Go {
 	private Tablero tablero = new Tablero();
 	boolean ko;
 	List<Ficha> fichasacomer=new LinkedList<Ficha>();
-	
+	Ficha knock;
 	public Jugador getNext() {
 		return next;
 	}
@@ -57,13 +57,16 @@ public class Go {
 		fichasacomer.clear();
 		a=puedoComerFichas(fila, columna, j);
 		b=noEsSuicidio(fila, columna, j);
-		if(a==true && b==false && ko==true ){
+		if(a==true && b==false && ko==true && knock.getFila()==fila && knock.getColumna()==columna ){
 			return false;
 		}	
-		if(a==true && b==false)
+		if(a==true && b==false){
 			ko=true;
-		else
+			knock=fichasacomer.get(0);
+		}else{
 			ko=false;
+			knock=null;
+		}	
 		if(a){
 			tablero.agregarFicha(j, fila, columna);
 			for(Ficha fic: fichasacomer){
