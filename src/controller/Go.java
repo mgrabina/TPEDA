@@ -157,7 +157,8 @@ public class Go {
 		return false;
 	}
 	void MINIMAX(){
-		
+		//Hacer arbol de movimientos, usando la clase tree y move que cuando se crea se asigna su heuristica.
+		Move m = new Move(tablero, 0, 0, maquina);
 	}
 	
 }
