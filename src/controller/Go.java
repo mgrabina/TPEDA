@@ -52,7 +52,7 @@ public class Go {
 		if(noEsKo(fila, columna, j)){
 			if(puedoComerFichas(fila, columna, j)){
 				tablero.agregarFicha(j, fila, columna); //habria que cambiar el orden de los parametros de este metodo para que esten todos igualitos :)
-				comer(fila, columna, j);
+
 				return true;
 			}
 
@@ -81,15 +81,88 @@ public class Go {
 		return noEsSuicidio(fila, columna, j) && noEsKo(fila, columna, j);
 	}*/
 	
-	private void comer(int fila, int columna, Jugador j) {
-		// TODO Auto-generated method stub
+	private boolean puedoComerFichas(int fila, int columna, Jugador j) {
+		tablero.agregarFicha(j, fila, columna);
+		
+		Ficha f;
+		
+		int izq = (columna == 0) ? 0 : 1;
+		int der = (12 == columna) ? 0 : 1;
+		int arr = (fila == 0) ? 0 : 1;
+		int abj = (12 == fila) ? 0 : 1;
+		boolean izqB = false, derB = false, arrB = false, abjB = false;
+		
+		
+		if(izq != 0){
+			f = tablero.getFicha(fila, columna - 1);
+			if(f != null && f.getColor() != j.getColor())
+				izqB = intentarComer(fila, columna - 1, !j.getColor());
+		}
+		
+		if(der != 0){
+			f = tablero.getFicha(fila, columna + 1);
+			if(f != null && f.getColor() != j.getColor())
+				derB = intentarComer(fila, columna + 1, !j.getColor());
+		}
+		
+		if(arr != 0){
+			f = tablero.getFicha(fila + 1, columna);
+			if(f != null && f.getColor() != j.getColor())
+				arrB = intentarComer(fila + 1, columna, !j.getColor());
+		}
+		
+		if(abj != 0){
+			f = tablero.getFicha(fila - 1, columna);
+			if(f != null && f.getColor() != j.getColor())
+				abjB = intentarComer(fila - 1, columna, !j.getColor());
+		}
+		
+		tablero.sacarFicha(fila, columna);
+		
+		return izqB || derB || arrB || abjB;
 		
 	}
 
-
-	private boolean puedoComerFichas(int fila, int columna, Jugador j) {
-		// TODO Auto-generated method stub
+	private boolean intentarComer(int fila, int columna, boolean color) {
+		if(!tieneLibertad(fila, columna, color, new LinkedList<Ficha>())){
+				comer(fila, columna, color);
+				return true;
+		}
+		
 		return false;
+	}
+
+	private void comer(int fila, int columna, boolean color) {
+		int izq, der, arr, abj;
+		Ficha f;
+		
+		izq = (columna == 0) ? 0 : 1;
+		der = (12 == columna) ? 0 : 1;
+		arr = (fila == 0) ? 0 : 1;
+		abj = (12 == fila) ? 0 : 1;
+		
+		tablero.sacarFicha(fila, columna);
+		
+		for (int l = columna - izq; l <= columna + der; l++) {
+			f = tablero.getFicha(fila, l);
+			if (f != null && f.getColor() == color) {
+				comer(fila, l, color);
+			}
+		}
+		
+		if (arr == 1) {
+			f = tablero.getFicha(fila - 1, columna);
+			if (f != null && f.getColor() == color) {
+				comer(fila - 1, columna, color);
+			}
+		}
+		
+		if (abj == 1) {
+			f = tablero.getFicha(fila + 1, columna);
+			if (f != null && f.getColor() == color) {
+				comer(fila + 1, columna, color);
+			}
+		}
 	}
 
 	private boolean noEsKo(int fila, int columna, Jugador j) {
@@ -101,7 +174,7 @@ public class Go {
 		List<Ficha> marcados = new LinkedList<Ficha>();
 		tablero.agregarFicha(j, fila, columna);
 		boolean a=tieneLibertad(fila, columna, j.getColor(), marcados);
-		tablero.comerFicha(fila, columna);
+		tablero.sacarFicha(fila, columna);
 		return a;
 	}
 

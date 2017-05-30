@@ -16,7 +16,7 @@ public class Tablero {
 		return false;
 	}
 	
-	public void comerFicha(int fil, int col){
+	public void sacarFicha(int fil, int col){
 		tablero[fil][col] = null;
 		return;
 	}
