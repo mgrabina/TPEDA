@@ -52,7 +52,7 @@ public class Go {
 					
 		if(noEsKo(fila, columna, j)){
 			if(puedoComerFichas(fila, columna, j)){
-				tablero.agregarFicha(j, fila, columna); //habria que cambiar el orden de los parametros de este metodo para que esten todos igualitos :)
+				tablero.agregarFicha(j, fila, columna);
 
 				return true;
 			}
@@ -65,23 +65,6 @@ public class Go {
 		return false;
 	}
 		
-/*		if(validarMovimiento(fila, columna, j)){
-			tablero.agregarFicha(j, fila, columna);
-			return true;
-		}
-		
-		return false;*/
-	
-
-/*	public boolean validarMovimiento(int fila, int columna, Jugador j){
-		//if(puedoComerFicha)
-		//		if(!esKo)
-		//			return true;
-		//		return false;
-		
-		return noEsSuicidio(fila, columna, j) && noEsKo(fila, columna, j);
-	}*/
-	
 	private boolean puedoComerFichas(int fila, int columna, Jugador j) {
 		tablero.agregarFicha(j, fila, columna);
 		
