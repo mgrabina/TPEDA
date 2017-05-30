@@ -107,13 +107,13 @@ public class Go {
 		}
 		
 		if(arr != 0){
-			f = tablero.getFicha(fila + 1, columna);
+			f = tablero.getFicha(fila, columna);
 			if(f != null && f.getColor() != j.getColor())
 				arrB = intentarComer(fila + 1, columna, !j.getColor());
 		}
 		
 		if(abj != 0){
-			f = tablero.getFicha(fila - 1, columna);
+			f = tablero.getFicha(fila, columna);
 			if(f != null && f.getColor() != j.getColor())
 				abjB = intentarComer(fila - 1, columna, !j.getColor());
 		}
