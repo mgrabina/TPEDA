@@ -11,6 +11,7 @@ import back.*;
 
 import back.Jugador;
 import back.Tablero;
+import front.GUI;
 import sun.misc.Queue;
 
 public class Go {
@@ -142,6 +143,7 @@ public class Go {
 		abj = (12 == fila) ? 0 : 1;
 		
 		tablero.sacarFicha(fila, columna);
+		GUI.sacarFicha(fila, columna);
 		
 		for (int l = columna - izq; l <= columna + der; l++) {
 			f = tablero.getFicha(fila, l);
