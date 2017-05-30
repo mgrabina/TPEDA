@@ -6,10 +6,13 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.*;
 
+import controller.Go;
 import controller.Listeners;
+import javafx.scene.control.Alert;
 
 public class GUI {
 	static JFrame ventana;
@@ -20,7 +23,7 @@ public class GUI {
 	public static final Integer TAMANIO=13;
 	public static final Integer TAMANIOCASILLERO=ALTO/TAMANIO;
 	public static final Color BACKGROUNDCOLOR = Color.yellow;
-	
+	public static final String PATH = new File("").getAbsolutePath();
 	public static void iniciar() {
 		Integer i,j;
 		ventana = new JFrame("GO EDA!");
@@ -28,7 +31,8 @@ public class GUI {
 		ventana.setLocationRelativeTo(null);
 		ventana.setLayout(new BorderLayout());
 		ventana.setResizable(false);
-		ventana.setContentPane(new JLabel(new ImageIcon("C:/Users/Martin Grabina/JavaEclipseWorkspace/TPEDA/src/img/background.jpg")));
+		System.out.println(PATH);
+		ventana.setContentPane(new JLabel(new ImageIcon(PATH+"/src/img/background.jpg")));
 		
 		tablero = new GridLayout(TAMANIO, TAMANIO);
 		ventana.setLayout(tablero);
