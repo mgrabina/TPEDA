@@ -20,6 +20,8 @@ public class Go {
 	private Jugador persona;
 	private Jugador next;
 	private Tablero tablero = new Tablero();
+	boolean ko;
+	List<Ficha> fichasacomer=new LinkedList<Ficha>();
 	
 	public Jugador getNext() {
 		return next;
@@ -43,25 +45,41 @@ public class Go {
 
 	public Go(String persona){
 		this.persona = new Jugador(persona, false, false);
+		ko=false;
 		next=this.persona;
 	}
 	
 	public boolean mover(int fila, int columna, Jugador j){
+		boolean a;
+		boolean b;
 		if(tablero.getFicha(fila, columna) != null)
 			return false;
-					
-		if(noEsKo(fila, columna, j)){
-			if(puedoComerFichas(fila, columna, j)){
-				tablero.agregarFicha(j, fila, columna);
-
-				return true;
+		fichasacomer.clear();
+		a=puedoComerFichas(fila, columna, j);
+		b=noEsSuicidio(fila, columna, j);
+		if(a==true && b==false && ko==true ){
+			return false;
+		}	
+		if(a==true && b==false)
+			ko=true;
+		else
+			ko=false;
+		if(a){
+			System.out.println("llego1");
+			tablero.agregarFicha(j, fila, columna);
+			for(Ficha fic: fichasacomer){
+				System.out.println("llego");
+				comer(fic.getFila(),fic.getColumna(),fic.getColor());
 			}
-
-			if(noEsSuicidio(fila, columna, j)){
-				tablero.agregarFicha(j, fila, columna);
-				return true;
-			}
+			return true;
 		}
+		if(b){
+			tablero.agregarFicha(j, fila, columna);
+			return true;
+		}
+			
+	
+		
 		return false;
 	}
 		
@@ -109,8 +127,7 @@ public class Go {
 
 	private boolean intentarComer(int fila, int columna, boolean color, Jugador j) {
 		if(!tieneLibertad(fila, columna, color, new LinkedList<Ficha>())){
-				comer(fila, columna, color, j);
-				System.out.println("puntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
+				fichasacomer.add(new Ficha(color, fila, columna));
 				return true;
 		}
 		
@@ -187,7 +204,6 @@ public class Go {
 					return true;
 			}else
 				if(f==null){
-					System.out.println("llego");
 					return true;
 				}
 		}
@@ -199,7 +215,6 @@ public class Go {
 					return true;
 			}else
 				if(f==null){
-					System.out.println("llego");
 					return true;
 				}
 		}
@@ -211,7 +226,6 @@ public class Go {
 					return true;
 			}else
 				if(f==null){
-					System.out.println("llego");
 					return true;
 				}
 		}
