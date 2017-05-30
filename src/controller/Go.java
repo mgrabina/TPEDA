@@ -65,11 +65,9 @@ public class Go {
 		else
 			ko=false;
 		if(a){
-			System.out.println("llego1");
 			tablero.agregarFicha(j, fila, columna);
 			for(Ficha fic: fichasacomer){
-				System.out.println("llego");
-				comer(fic.getFila(),fic.getColumna(),fic.getColor());
+				comer(fic.getFila(),fic.getColumna(),fic.getColor(),next);
 			}
 			return true;
 		}
