@@ -1,6 +1,7 @@
 package front;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -18,16 +19,16 @@ public class GUI {
 	static JPanel[][] casilleros;
 	public static final Integer TAMANIO=13;
 	public static final Integer TAMANIOCASILLERO=ALTO/TAMANIO;
-	public static final Color BACKGROUNDCOLOR = Color.CYAN;
+	public static final Color BACKGROUNDCOLOR = Color.yellow;
 	
 	public static void iniciar() {
 		Integer i,j;
 		ventana = new JFrame("GO EDA!");
-		ventana.setSize(ALTO, ALTO);
+		ventana.setSize(1000, 1000);
 		ventana.setLocationRelativeTo(null);
 		ventana.setLayout(new BorderLayout());
 		ventana.setResizable(false);
-		ventana.setForeground(new Color(144, 238, 144));
+		ventana.setContentPane(new JLabel(new ImageIcon("C:/Users/Martin Grabina/JavaEclipseWorkspace/TPEDA/src/img/background.jpg")));
 		
 		tablero = new GridLayout(TAMANIO, TAMANIO);
 		ventana.setLayout(tablero);
@@ -36,23 +37,25 @@ public class GUI {
 		
 		for(i=0;i<TAMANIO;i++)
 			for(j=0;j<TAMANIO;j++){
-				casilleros[i][j] = new JPanel();
-				casilleros[i][j].add(new JLabel(i+" "+j));				
+				casilleros[i][j] = new JPanel();			
 				casilleros[i][j].setSize(TAMANIOCASILLERO,TAMANIOCASILLERO);
 				casilleros[i][j].setLocation(new Point(i*TAMANIOCASILLERO, j*TAMANIOCASILLERO));
-				casilleros[i][j].setBackground(BACKGROUNDCOLOR);
+				casilleros[i][j].setOpaque(false);
 				casilleros[i][j].addMouseListener(new MyListener(i,j));
 				ventana.add(casilleros[i][j]);
 			}
 		ventana.setVisible(true);
 	}
 	public static void ponerFicha(Boolean color, int i, int j){
+		casilleros[i][j].setOpaque(true);
 		if(color)
 			casilleros[i][j].setBackground(Color.white);
 		else
-			casilleros[i][j].setBackground(Color.RED);
+			casilleros[i][j].setBackground(Color.black);
 	}
 	public static void sacarFicha(int i, int j){
+		casilleros[i][j].setOpaque(false);
+
 		casilleros[i][j].setBackground(BACKGROUNDCOLOR);
 	}
 	
