@@ -75,30 +75,30 @@ public class Go {
 		int arr = (fila == 0) ? 0 : 1;
 		int abj = (12 == fila) ? 0 : 1;
 		boolean izqB = false, derB = false, arrB = false, abjB = false;
-		
+		Jugador oponente = j.esMaquina()? persona : maquina;
 		
 		if(izq != 0){
 			f = tablero.getFicha(fila, columna - 1);
 			if(f != null && f.getColor() != j.getColor())
-				izqB = intentarComer(fila, columna - 1, !j.getColor());
+				izqB = intentarComer(fila, columna - 1, oponente.getColor(), oponente);
 		}
 		
 		if(der != 0){
 			f = tablero.getFicha(fila, columna + 1);
 			if(f != null && f.getColor() != j.getColor())
-				derB = intentarComer(fila, columna + 1, !j.getColor());
+				derB = intentarComer(fila, columna + 1, oponente.getColor(), oponente);
 		}
 		
 		if(arr != 0){
 			f = tablero.getFicha(fila - 1, columna);
 			if(f != null && f.getColor() != j.getColor())
-				arrB = intentarComer(fila - 1, columna, !j.getColor());
+				arrB = intentarComer(fila - 1, columna, oponente.getColor(), oponente);
 		}
 		
 		if(abj != 0){
 			f = tablero.getFicha(fila + 1, columna);
 			if(f != null && f.getColor() != j.getColor())
-				abjB = intentarComer(fila + 1, columna, !j.getColor());
+				abjB = intentarComer(fila + 1, columna, oponente.getColor(), oponente);
 		}
 		
 		tablero.sacarFicha(fila, columna);
@@ -107,16 +107,17 @@ public class Go {
 		
 	}
 
-	private boolean intentarComer(int fila, int columna, boolean color) {
+	private boolean intentarComer(int fila, int columna, boolean color, Jugador j) {
 		if(!tieneLibertad(fila, columna, color, new LinkedList<Ficha>())){
-				comer(fila, columna, color);
+				comer(fila, columna, color, j);
+				System.out.println("puntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
 				return true;
 		}
 		
 		return false;
 	}
 
-	private void comer(int fila, int columna, boolean color) {
+	private void comer(int fila, int columna, boolean color, Jugador j) {
 		int izq, der, arr, abj;
 		Ficha f;
 		
@@ -125,27 +126,32 @@ public class Go {
 		arr = (fila == 0) ? 0 : 1;
 		abj = (12 == fila) ? 0 : 1;
 		
+		if(j.esMaquina())
+			maquina.agregarPuntos();
+		else
+			persona.agregarPuntos();
 		tablero.sacarFicha(fila, columna);
 		GUI.sacarFicha(fila, columna);
 		
 		for (int l = columna - izq; l <= columna + der; l++) {
 			f = tablero.getFicha(fila, l);
 			if (f != null && f.getColor() == color) {
-				comer(fila, l, color);
+				comer(fila, l, color, j);
 			}
 		}
 		
 		if (arr == 1) {
 			f = tablero.getFicha(fila - 1, columna);
 			if (f != null && f.getColor() == color) {
-				comer(fila - 1, columna, color);
+				if(j.esMaquina())
+				comer(fila - 1, columna, color, j);
 			}
 		}
 		
 		if (abj == 1) {
 			f = tablero.getFicha(fila + 1, columna);
 			if (f != null && f.getColor() == color) {
-				comer(fila + 1, columna, color);
+				comer(fila + 1, columna, color, j);
 			}
 		}
 	}

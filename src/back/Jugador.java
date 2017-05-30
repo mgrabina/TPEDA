@@ -25,8 +25,8 @@ public class Jugador {
 		return puntos;
 	}
 	
-	public int agregarPuntos(int puntos){
-		this.puntos += puntos;
+	public int agregarPuntos(){
+		this.puntos ++;
 		return this.puntos;
 	}
 	
