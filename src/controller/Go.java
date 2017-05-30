@@ -69,6 +69,7 @@ public class Go {
 			for(Ficha fic: fichasacomer){
 				comer(fic.getFila(),fic.getColumna(),fic.getColor(),next);
 			}
+			System.out.println("PuntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
 			return true;
 		}
 		if(b){
