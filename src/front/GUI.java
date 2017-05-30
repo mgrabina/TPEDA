@@ -31,7 +31,6 @@ public class GUI {
 		ventana.setLocationRelativeTo(null);
 		ventana.setLayout(new BorderLayout());
 		ventana.setResizable(false);
-		System.out.println(PATH);
 		ventana.setContentPane(new JLabel(new ImageIcon(PATH+"/src/img/background.jpg")));
 		
 		tablero = new GridLayout(TAMANIO, TAMANIO);
