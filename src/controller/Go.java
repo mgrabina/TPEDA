@@ -164,7 +164,6 @@ public class Go {
 			f = tablero.getFicha(fila - 1, columna);
 			if (f != null && f.getColor() == color) {
 				comer(fila - 1, columna, color);
-				comer(fila - 1, columna, color, j);
 			}
 		}
 		
