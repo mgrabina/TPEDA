@@ -57,6 +57,7 @@ public class Go {
 		fichasacomer.clear();
 		a=puedoComerFichas(fila, columna, j);
 		b=noEsSuicidio(fila, columna, j);
+		System.out.println(a);
 		if(a==true && b==false && ko==true && knock.getFila()==fila && knock.getColumna()==columna ){
 			return false;
 		}	
@@ -163,6 +164,7 @@ public class Go {
 			f = tablero.getFicha(fila - 1, columna);
 			if (f != null && f.getColor() == color) {
 				comer(fila - 1, columna, color);
+				comer(fila - 1, columna, color, j);
 			}
 		}
 		
