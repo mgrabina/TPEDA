@@ -12,6 +12,7 @@ import back.*;
 import back.Jugador;
 import back.Tablero;
 import front.GUI;
+import javafx.util.Pair;
 import sun.misc.Queue;
 
 public class Go {
@@ -78,11 +79,9 @@ public class Go {
 		}
 		if(b){
 			tablero.agregarFicha(j, fila, columna);
+			System.out.println("PuntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
 			return true;
 		}
-			
-	
-		
 		return false;
 	}
 		
@@ -146,9 +145,9 @@ public class Go {
 		abj = (12 == fila) ? 0 : 1;
 		
 		if(color)
-			maquina.agregarPuntos();
+			maquina.agregarPuntos(1);
 		else
-			persona.agregarPuntos();
+			persona.agregarPuntos(1);
 		
 		tablero.sacarFicha(fila, columna);
 		GUI.sacarFicha(fila, columna);
@@ -226,11 +225,100 @@ public class Go {
 					return true;
 				}
 		}
-		
-		
-		
 		return false;
 	}
+	
+	private void esTerritorioWR(int fila, int columna, Jugador j){
+		List<Pair<Integer, Integer>> marcados = new LinkedList<Pair<Integer, Integer>>();
+		int resp = esTerritorio(fila, columna, marcados);
+		
+		if(resp == 1 || resp == 2){
+			if(j.esMaquina())
+				maquina.agregarPuntos(marcados.size());
+			else
+				persona.agregarPuntos(marcados.size());
+		}
+		
+	}
+	
+	private int esTerritorio(int fila, int columna, List<Pair<Integer, Integer>> marcados){
+		boolean izqB, derB, arrB, abjB;
+		Pair<Integer, Integer> pair = new Pair<Integer, Integer>(fila, columna);
+		marcados.add(pair);
+		
+		izqB = !(columna == 0);
+		derB = !(columna == 12);
+		arrB = !(fila == 0);
+		abjB = !(fila == 12);
+		int izqR = 0, derR = 0, arrR = 0, abjR = 0;
+		
+		if(izqB){
+			Ficha izq = tablero.getFicha(fila, columna - 1);
+			Pair<Integer, Integer> izqP = new Pair<Integer, Integer>(fila, columna - 1);
+			if(!marcados.contains(izqP)){
+				if(izq != null){
+					if(izq.getColor() == true)
+						izqR = 1;
+					else
+						izqR = 2;
+				}
+				else
+					izqR = esTerritorio(fila, columna - 1, marcados);				
+			}
+		}
+		
+		if(derB){
+			Ficha der = tablero.getFicha(fila, columna + 1);
+			Pair<Integer, Integer> derP = new Pair<Integer, Integer>(fila, columna + 1);
+			if(!marcados.contains(derP)){
+				if(der != null){
+					if(der.getColor() == true)
+						derR = 1;
+					else
+						derR = 2;
+				}
+				else
+					derR = esTerritorio(fila, columna + 1, marcados);
+			}
+		}
+		
+		if(arrB){
+			Ficha arr = tablero.getFicha(fila - 1, columna);
+			Pair<Integer, Integer> arrP = new Pair<Integer, Integer>(fila - 1, columna);
+			if(!marcados.contains(arrP)){
+				if(arr != null){
+					if(arr.getColor() == true)
+						arrR = 1;
+					else
+						arrR = 2;
+				}
+				else
+					arrR = esTerritorio(fila - 1, columna, marcados);
+			}
+		}
+		
+		if(abjB){
+			Ficha abj = tablero.getFicha(fila + 1, columna);
+			Pair<Integer, Integer> abjP = new Pair<Integer, Integer>(fila + 1, columna);
+			if(!marcados.contains(abjP)){	
+				if(abj != null){
+					if(abj.getColor() == true)
+						abjR = 1;
+					else
+						abjR = 2;
+				}
+				else
+					abjR = esTerritorio(fila + 1, columna, marcados);
+			}
+		}
+		
+		if(izqR + derR == 3 || izqR + arrR == 3 || izqR + abjR == 3 || derR + arrR == 3 || derR + abjR == 3 || arrR + abjR == 3 || izqR == 3 || derR == 3 || arrR == 3 || abjR == 3)
+			return 3;
+		else
+			return Math.max(Math.max(izqR, derR), Math.max(arrR, abjR));
+		
+	}
+	
 	void MINIMAX(){
 		//Hacer arbol de movimientos, usando la clase tree y move que cuando se crea se asigna su heuristica.
 		Move m = new Move(tablero, 0, 0, maquina);
