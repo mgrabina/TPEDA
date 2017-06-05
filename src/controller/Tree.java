@@ -26,6 +26,10 @@ public class Tree<T> {
 				children.remove(tree);
 		}	
 	}
+	<V> V getValue(){
+		return (V) value;
+	}
+	
 	//Genera un documento .dot diferenciando por niveles el jugador imprimiento el valor de los nodos del arbol
 	public void generarDOT() throws FileNotFoundException, InterruptedException{
 		Tree<T> arbol = this;
@@ -65,5 +69,11 @@ public class Tree<T> {
 		}
 		writer.println("}");
 		writer.close();
+	}
+	public ArrayList<Tree<T>> getChildren() {
+		return children;
+	}
+	public void setChildren(ArrayList<Tree<T>> children) {
+		this.children = children;
 	}
 }

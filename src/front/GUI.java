@@ -1,14 +1,18 @@
 package front;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import controller.Go;
 import controller.Listeners;
@@ -40,7 +44,7 @@ public class GUI {
 		
 		for(i=0;i<TAMANIO;i++)
 			for(j=0;j<TAMANIO;j++){
-				casilleros[i][j] = new JPanel();			
+				casilleros[i][j] = new JPanel();	
 				casilleros[i][j].setSize(TAMANIOCASILLERO,TAMANIOCASILLERO);
 				casilleros[i][j].setLocation(new Point(i*TAMANIOCASILLERO, j*TAMANIOCASILLERO));
 				casilleros[i][j].setOpaque(false);
@@ -51,14 +55,16 @@ public class GUI {
 	}
 	public static void ponerFicha(Boolean color, int i, int j){
 		casilleros[i][j].setOpaque(true);
+		casilleros[i][j].setBorder(BorderFactory.createRaisedBevelBorder());
 		if(color)
 			casilleros[i][j].setBackground(Color.white);
 		else
-			casilleros[i][j].setBackground(Color.black);
+			casilleros[i][j].setBackground(Color.gray);
 	}
 	public static void sacarFicha(int i, int j){
 		casilleros[i][j].setOpaque(false);
 
+		casilleros[i][j].setBorder(null);
 		casilleros[i][j].setBackground(BACKGROUNDCOLOR);
 	}
 	

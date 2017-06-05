@@ -6,13 +6,14 @@ import java.io.FileNotFoundException;
 
 import back.*;
 public class Main {
+	private static Go game;
 	
 	public static void main(String[] args){
 //		Argumentos
 //		java -jar tpe.jar (-visual | -file archivo -player n) (-maxtime n | -depth n) [-prune] [-tree]
 //		
 //		
-		Go game = new Go("Jugador");
+		game = new Go("Jugador");
 		Listeners listener= new Listeners(game);
 		
 		//if(args[0]=="visual")
@@ -25,4 +26,7 @@ public class Main {
 		
 	}
 	
+	public static Go obtenerGo(){
+		return game;
+	}
 }

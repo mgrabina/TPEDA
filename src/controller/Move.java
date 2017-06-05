@@ -23,8 +23,11 @@ public class Move {
 	}
 	
 	private void heuristica(){
-		//Mejorar...
-		heuristica = 0;
+		//Heuristica base: Diferencia de puntaje actual, respecto del jugador que realiza el movimiento.
+		if(j.esMaquina())
+			heuristica = Math.abs(Main.obtenerGo().obtenerPuntajes());
+		else
+			heuristica = Main.obtenerGo().obtenerPuntajes();
 	}
 	@Override
 	public String toString() {

@@ -318,10 +318,31 @@ public class Go {
 			return Math.max(Math.max(izqR, derR), Math.max(arrR, abjR));
 		
 	}
-	
-	void MINIMAX(){
+	public int obtenerPuntajes(){
+		return persona.getPuntos() - maquina.getPuntos();
+	}
+	Move MINIMAX(Jugador j, int depth){
 		//Hacer arbol de movimientos, usando la clase tree y move que cuando se crea se asigna su heuristica.
-		Move m = new Move(tablero, 0, 0, maquina);
+		Tree<Move> t = null;
+		MINIMAXW(t, 0, depth, j);
+		return t.getValue();
+	}
+	private int MINIMAXW(Tree t, int level, int depth, Jugador j){
+		if(level == depth){
+			
+		}else if(t == null){
+			//Primera vez
+			t = new Tree(new Move(tablero, 0,0, j));
+		}else if(t.getChildren().size()==0){
+			//Es hoja
+		}
+		if(level%2==0){
+			//Nivel par - agarrar max
+			
+		}else{
+			//Nivel impar - agarrar min
+		}
+		return 0;
 	}
 	
 }
