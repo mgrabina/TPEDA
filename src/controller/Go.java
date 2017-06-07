@@ -340,9 +340,7 @@ public class Go {
 					f = intentoPonerFicha(new Ficha(!color, i, j));
 					if(f != null){
 						//Por cada movimiento posible lo agrego a los hijos de la situacion actual
-						tree.getChildren().add(new Tree<Move>(null));
-						
-				
+						tree.getChildren().add(new Tree<Move>(null));				
 					}
 				}
 			}
@@ -356,11 +354,14 @@ public class Go {
 			//Checkeo Minimax
 			if(currentLevel%2==0) //Nivel par -> max
 			{
-				int indexMax = ((Move)tree.getValue()).getMaxHeuristica();
+				int indexMax = tree.getMaxHeuristica();
 				((Move)tree.getValue()).setHeuristica(((Move)tree.getChildren().get(indexMax).getValue()).getHeuristica());
-				((Move)tree.getValue()).addMovementToHistory(((Move)tree.getChildren().get(indexMax).getValue()).getMovimientos().get(index));
+				((Move)tree.getValue()).addMovementToHistory(((Move)tree.getChildren().get(indexMax).getValue()).getMovimientos().get(indexMax));
 			}else{					//Nivel impar -> min
-				((Move)tree.getValue()).setHeuristica(tree.getMinHeuristica());			}
+				int indexMin = tree.getMinHeuristica();
+				((Move)tree.getValue()).setHeuristica(((Move)tree.getChildren().get(indexMin).getValue()).getHeuristica());
+				((Move)tree.getValue()).addMovementToHistory(((Move)tree.getChildren().get(indexMin).getValue()).getMovimientos().get(indexMin));	
+			}
 		}
 		return tree;
 	}

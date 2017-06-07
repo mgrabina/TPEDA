@@ -42,12 +42,5 @@ public class Move {
 //	}
 
 	
-	//INDEXES MAX Y MIN DEL CHILDREN
-	public int getMaxHeuristica(){
-		
-		return 0;
-	}
-	public int getMinHeuristica(){
-		return 0;
-	}
+	
 }

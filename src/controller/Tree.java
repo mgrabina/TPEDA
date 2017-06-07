@@ -77,5 +77,25 @@ public class Tree<T> {
 	public void setChildren(ArrayList<Tree<T>> children) {
 		this.children = children;
 	}
-	
+	//INDEXES MAX Y MIN DEL CHILDREN
+		public int getMaxHeuristica(){
+			int index=0;
+			int h=0;
+			for(int i=0;i<children.size();i++)
+				if(((Move)children.get(i).getValue()).getHeuristica() > h){
+					index = i;
+					h = ((Move)children.get(i).getValue()).getHeuristica();
+				}
+			return index;
+		}
+		public int getMinHeuristica(){
+			int index=0;
+			int h=0;
+			for(int i=0;i<children.size();i++)
+				if(((Move)children.get(i).getValue()).getHeuristica() < h){
+					index = i;
+					h = ((Move)children.get(i).getValue()).getHeuristica();
+				}
+			return index;
+		}
 }
