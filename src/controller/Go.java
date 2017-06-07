@@ -323,27 +323,50 @@ public class Go {
 	}
 	Move MINIMAX(Jugador j, int depth){
 		//Hacer arbol de movimientos, usando la clase tree y move que cuando se crea se asigna su heuristica.
-		Tree<Move> t = null;
-		MINIMAXW(t, 0, depth, j);
+		Tree<Move> t = new Tree<Move>(new Move(null, null));
+		minimax(t, depth, 0, j.getColor());
 		return t.getValue();
 	}
-	private int MINIMAXW(Tree t, int level, int depth, Jugador j){
-		if(level == depth){
-			
-		}else if(t == null){
-			//Primera vez
-			t = new Tree(new Move(tablero, 0,0, j));
-		}else if(t.getChildren().size()==0){
-			//Es hoja
+
+	//Agregar funciones getMovPosibles(), getMax() y getMin().
+
+	public Tree<Move> minimax(Tree<Move> tree, int depth, int currentLevel, boolean color){
+		if(currentLevel != depth){	//si no estoy en nivel de hojas
+										//     por cada movimiento posible creo un hijo y llamo la recursiva
+			for(int i=0;i<13;i++){
+				for(int j=0;j<13;j++){
+				//Obtengo los movimientos posibles
+					Ficha f;
+					f = intentoPonerFicha(new Ficha(!color, i, j));
+					if(f != null){
+						//Por cada movimiento posible lo agrego a los hijos de la situacion actual
+						tree.getChildren().add(new Tree<Move>(null));
+						
+				
+					}
+				}
+			}
+			for(Tree<Move> t : tree.getChildren()) //Por cada hijo hay una recursiva
+				minimax(t, depth, currentLevel+1, !color);
 		}
-		if(level%2==0){
-			//Nivel par - agarrar max
-			
+		//aplicar heuristica
+		if(tree.getChildren().size() == 0){
+			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>)tree.getValue()).size()).getHeuristica();
 		}else{
-			//Nivel impar - agarrar min
+			//Checkeo Minimax
+			if(currentLevel%2==0) //Nivel par -> max
+			{
+				int indexMax = ((Move)tree.getValue()).getMaxHeuristica();
+				((Move)tree.getValue()).setHeuristica(((Move)tree.getChildren().get(indexMax).getValue()).getHeuristica());
+				((Move)tree.getValue()).addMovementToHistory(((Move)tree.getChildren().get(indexMax).getValue()).getMovimientos().get(index));
+			}else{					//Nivel impar -> min
+				((Move)tree.getValue()).setHeuristica(tree.getMinHeuristica());			}
 		}
-		return 0;
+		return tree;
 	}
-	
+	private Ficha intentoPonerFicha(Ficha f){
+		//
+		return null;
+	}
 }
 

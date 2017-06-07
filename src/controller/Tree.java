@@ -20,6 +20,7 @@ public class Tree<T> {
 	public Tree<T> getChild(int index){
 		return children.get(index);
 	}
+	
 	public void removeChild(T value){
 		for (Tree<T> tree : children) {
 			if(tree.value.equals(value))
@@ -76,4 +77,5 @@ public class Tree<T> {
 	public void setChildren(ArrayList<Tree<T>> children) {
 		this.children = children;
 	}
+	
 }
