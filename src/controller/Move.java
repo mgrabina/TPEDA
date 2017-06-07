@@ -1,36 +1,36 @@
 package controller;
 
+import java.util.ArrayList;
+
+import back.Ficha;
 import back.Jugador;
 import back.Tablero;
 import javafx.util.Pair;
 
 public class Move {
 	private int heuristica;
-	private Tablero actual;
-	private Tablero siguiente;
-	private Pair<Integer, Integer> nuevaFicha;
-	private Jugador j;
+	private ArrayList<Ficha> movimientos;
 	
-	public Move(Tablero actual, int x, int y, Jugador j) {
-		this.actual = actual;
-		nuevaFicha = new Pair<Integer, Integer>(x, y);
-		siguiente = actual;
-		siguiente.agregarFicha(j, x, y);
-		heuristica();
+	public Move(ArrayList<Ficha> movimientosAnteriores, Ficha f) {
+		movimientos = (ArrayList<Ficha>) movimientosAnteriores.clone();
+		movimientos.add(f);
 	}
 	public int getHeuristica(){
 		return heuristica;
 	}
-	
+		
 	private void heuristica(){
 		//Heuristica base: Diferencia de puntaje actual, respecto del jugador que realiza el movimiento.
-		if(j.esMaquina())
+		if(movimientos.get(movimientos.size()-1).getColor() == true)
 			heuristica = Math.abs(Main.obtenerGo().obtenerPuntajes());
 		else
 			heuristica = Main.obtenerGo().obtenerPuntajes();
 	}
-	@Override
-	public String toString() {
-		return "("+nuevaFicha.getKey()+","+nuevaFicha.getValue()+") "+heuristica;
+	public ArrayList<Ficha> getMovimientos() {
+		return movimientos;
 	}
+//	@Override
+//	public String toString() {
+//		return "("+movimientos.get(movimientos.size()-1).getKey()+","+movimientos.get(movimientos.size()-1).getValue()+") "+heuristica;
+//	}
 }
