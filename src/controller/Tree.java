@@ -71,9 +71,11 @@ public class Tree<T> {
 		writer.println("}");
 		writer.close();
 	}
+	
 	public ArrayList<Tree<T>> getChildren() {
 		return children;
 	}
+	
 	public void setChildren(ArrayList<Tree<T>> children) {
 		this.children = children;
 	}
@@ -81,20 +83,28 @@ public class Tree<T> {
 		public int getMaxHeuristica(){
 			int index=0;
 			int h=0;
-			for(int i=0;i<children.size();i++)
-				if(((Move)children.get(i).getValue()).getHeuristica() > h){
+			int i;
+			int heuristica = 0;
+			
+			for(i=0;i<children.size();i++)
+				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
+				if(heuristica > h){
 					index = i;
-					h = ((Move)children.get(i).getValue()).getHeuristica();
+					h = heuristica;
 				}
 			return index;
 		}
 		public int getMinHeuristica(){
 			int index=0;
 			int h=0;
-			for(int i=0;i<children.size();i++)
-				if(((Move)children.get(i).getValue()).getHeuristica() < h){
+			int i;
+			int heuristica = 0;
+			
+			for(i=0;i<children.size();i++)
+				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
+				if(heuristica < h){
 					index = i;
-					h = ((Move)children.get(i).getValue()).getHeuristica();
+					h = heuristica;
 				}
 			return index;
 		}
