@@ -59,7 +59,7 @@ public class GUI {
 		if(color)
 			casilleros[i][j].setBackground(Color.white);
 		else
-			casilleros[i][j].setBackground(Color.gray);
+			casilleros[i][j].setBackground(Color.BLACK);
 	}
 	public static void sacarFicha(int i, int j){
 		casilleros[i][j].setOpaque(false);

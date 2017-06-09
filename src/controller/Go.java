@@ -55,7 +55,6 @@ public class Go {
 		fichasacomer.clear();
 		a=puedoComerFichas(fila, columna, j);
 		b=noEsSuicidio(fila, columna, j);
-		System.out.println(a);
 		if(a==true && b==false && ko==true && knock.getFila()==fila && knock.getColumna()==columna ){
 			return false;
 		}	
@@ -320,7 +319,7 @@ public class Go {
 		return persona.getPuntos() - maquina.getPuntos();
 	}
 	
-	void MINIMAX(Jugador j, int depth){
+	int[] MINIMAX(Jugador j, int depth){
 		//Hacer arbol de movimientos, usando la clase tree y move que cuando se crea se asigna su heuristica.
 		Tree<ArrayList<Move>> t = new Tree<ArrayList<Move>>(new ArrayList<Move>());
 		int index = minimax(t, depth, 0, j.getColor());
@@ -329,10 +328,10 @@ public class Go {
 		Move movimientoHijo = movimientosHijo.get(((ArrayList<Move>)t.getChildren().get(index).getValue()).size() - 1);
 		
 		Ficha f = movimientoHijo.getFicha();
-		
-		tablero.agregarFicha(j, f.getFila(), f.getColumna());
-		
-		return;
+		int a[]= new int[2];
+		a[0]=f.getFila();
+		a[0]=f.getColumna();
+		return a;
 	}
 
 	//Agregar funciones getMovPosibles(), getMax() y getMin().
@@ -372,9 +371,9 @@ public class Go {
 				Move movimientoActual = movimientos.get(((ArrayList<Move>)tree.getValue()).size() - 1);
 				ArrayList<Move> movimientosHijo = (ArrayList<Move>)tree.getChildren().get(indexMax).getValue();
 				Move movimientoHijo = movimientosHijo.get(((ArrayList<Move>)tree.getChildren().get(indexMax).getValue()).size() - 1);
-				
+
 				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
-				
+
 				return indexMax;
 			}else{					//Nivel impar -> min
 				int indexMin = tree.getMinHeuristica();
@@ -383,7 +382,7 @@ public class Go {
 				Move movimientoActual = movimientos.get(((ArrayList<Move>)tree.getValue()).size() - 1);
 				ArrayList<Move> movimientosHijo = (ArrayList<Move>)tree.getChildren().get(indexMin).getValue();
 				Move movimientoHijo = movimientosHijo.get(((ArrayList<Move>)tree.getChildren().get(indexMin).getValue()).size() - 1);
-				
+
 				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
 				
 				return indexMin;

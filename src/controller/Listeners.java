@@ -14,12 +14,17 @@ public class Listeners {
 
 
 	public static void llamadaDeCasillero(int fil, int col){
-		if(game.mover(fil, col, game.getNext())){
-			agregarFicha(fil, col);
-			game.setNext((game.getNext().esMaquina()==true)?game.getPersona():game.getMaquina());
-		}else{
-			
-		}
+		int mov[]=new int[2];
+		if(!game.getNext().esMaquina())
+			if(game.mover(fil, col, game.getNext())){
+				agregarFicha(fil, col);
+				game.setNext(game.getMaquina());
+				mov=game.MINIMAX(game.getNext(),2);
+				agregarFicha(mov[0],mov[1]);
+			}
+		else {
+
+			}
 	}
 	
 	private static void agregarFicha(int fil, int col){
