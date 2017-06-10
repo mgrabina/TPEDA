@@ -412,12 +412,36 @@ public class Go {
 			}
 	}
 	private Ficha intentoPonerFicha(Ficha f){
-		if(mover(f.getFila(), f.getColumna(), (f.getColor() ? maquina : persona))){
-				tablero.sacarFicha(f.getFila(), f.getColumna());
-				return f;
-		}
+		if(moverSinComer(f.getFila(), f.getColumna(), (f.getColor() ? maquina : persona)))
+			return f;
 		
 		return null;
+	}
+	
+	public boolean moverSinComer(int fila, int columna, Jugador j){
+		boolean a;
+		boolean b;
+		if(tablero.getFicha(fila, columna) != null)
+			return false;
+		fichasacomer.clear();
+		a=puedoComerFichas(fila, columna, j);
+		b=noEsSuicidio(fila, columna, j);
+		if(a==true && b==false && ko==true && knock.getFila()==fila && knock.getColumna()==columna ){
+			return false;
+		}	
+		if(a==true && b==false){
+			ko=true;
+			knock=fichasacomer.get(0);
+		}else{
+			ko=false;
+			knock=null;
+		}	
+		if(a)
+			return true;
+		if(b)
+			return true;
+		
+		return false;
 	}
 }
 
