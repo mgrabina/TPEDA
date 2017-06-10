@@ -349,7 +349,8 @@ public class Go {
 				//Obtengo los movimientos posibles
 					Ficha f;
 					f = intentoPonerFicha(new Ficha(color, i, j));
-					if(f != null){
+
+					if(f != null && !((ArrayList<Move>)tree.getValue()).contains(new Move(f))){
 						//Por cada movimiento posible creo un hijo con los movimientos viejos + el movimiento posible
 						ArrayList<Move> movimientosAnteriores = new ArrayList<Move> (((ArrayList<Move>)tree.getValue()));
 						movimientosAnteriores.add(new Move(f));
