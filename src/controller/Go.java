@@ -339,8 +339,10 @@ public class Go {
 	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color){
 		//aplicar heuristica
 		if(currentLevel == depth){
-			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica();
+			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica();
 			
+			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).setHeuristica(heuristicaDeLaHoja);
+
 			return -1;
 		}
 		
@@ -418,7 +420,7 @@ public class Go {
 		return null;
 	}
 	
-	public boolean moverSinComer(int fila, int columna, Jugador j){
+	private boolean moverSinComer(int fila, int columna, Jugador j){
 		boolean a;
 		boolean b;
 		if(tablero.getFicha(fila, columna) != null)
