@@ -337,12 +337,14 @@ public class Go {
 	//Agregar funciones getMovPosibles(), getMax() y getMin().
 	
 	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color){
+		//aplicar heuristica
+		if(currentLevel == depth){
+			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica();
+			
+			return -1;
+		}
 		
-		int indexARetornarSiEsRaiz = 0;
-		
-		if(currentLevel != depth){	//si no estoy en nivel de hojas
-										//     por cada movimiento posible creo un hijo y llamo la recursiva
-			for(int i=0;i<13;i++){
+		for(int i=0;i<13;i++){
 				for(int j=0;j<13;j++){
 				//Obtengo los movimientos posibles
 					Ficha f;
@@ -358,26 +360,19 @@ public class Go {
 				}
 			}
 			for(Tree<ArrayList<Move>> t : tree.getChildren()) //Por cada hijo hay una recursiva
-				indexARetornarSiEsRaiz = minimax(t, depth, currentLevel+1, !color);
-		}
-		//aplicar heuristica
-		if(currentLevel == depth){
-			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica();
-			
-			return -1;
-		}
-		else{
+				minimax(t, depth, currentLevel+1, !color);
+		
+		
 			//Checkeo Minimax
-			if(((ArrayList<Move>)tree.getValue()).size() != 0 && currentLevel%2==0) //Nivel par -> max
+			if(currentLevel%2==0) //Nivel par -> max
 			{
-				
 				int indexMax = tree.getMaxHeuristica();
+				
+				if(((ArrayList<Move>)tree.getValue()).size() != 0){
 				
 				ArrayList<Move> movimientos = tree.getValue();
 
 				int sizeMovimientos = movimientos.size();
-				
-				System.out.println(sizeMovimientos);
 				
 				Move movimientoActual = movimientos.get(sizeMovimientos - 1);
 				
@@ -388,11 +383,14 @@ public class Go {
 				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 
 				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
-
+				}
+				
 				return indexMax;
 				
-			}else if(((ArrayList<Move>)tree.getValue()).size() != 0){					//Nivel impar -> min
+			}else{					//Nivel impar -> min
 				int indexMin = tree.getMinHeuristica();
+				
+				 if(((ArrayList<Move>)tree.getValue()).size() != 0){
 				
 				ArrayList<Move> movimientos = tree.getValue();
 				
@@ -407,11 +405,10 @@ public class Go {
 				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 
 				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
-				
+				 }
+				 
 				return indexMin;
 			}
-		}
-		return indexARetornarSiEsRaiz;
 	}
 	private Ficha intentoPonerFicha(Ficha f){
 		if(mover(f.getFila(), f.getColumna(), (f.getColor() ? maquina : persona))){
