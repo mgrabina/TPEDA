@@ -10,13 +10,16 @@ import sun.misc.Queue;
 public class Tree<T> {
 	private T value;
 	private ArrayList<Tree<T>> children;
+	
 	public Tree(T value) {
 		this.value = value;
 		children = new ArrayList<Tree<T>>();
 	}
+	
 	public void AddChild(T value){
 		children.add(new Tree<T>(value));
 	}
+	
 	public Tree<T> getChild(int index){
 		return children.get(index);
 	}
