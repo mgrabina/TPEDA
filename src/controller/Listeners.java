@@ -18,6 +18,7 @@ public class Listeners {
 	public static void pasarClicked(){
 		
 	}
+	
 	public static void llamadaDeCasillero(int fil, int col){
 		int mov[]=new int[2];
 		if(!game.getNext().esMaquina())	//Si le toca a la persona
@@ -27,6 +28,7 @@ public class Listeners {
 				//Turno Maquina
 				game.setNext(game.getMaquina());
 				mov=game.MINIMAX(game.getNext(),2);	//Obtiene el movimiento a hacer
+				game.mover(mov[0], mov[1], game.getNext());
 				agregarFicha(mov[0],mov[1]);
 				game.setNext(game.getPersona());
 			}

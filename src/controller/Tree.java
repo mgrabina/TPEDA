@@ -89,12 +89,13 @@ public class Tree<T> {
 			int i;
 			int heuristica = 0;
 			
-			for(i=0;i<children.size();i++)
+			for(i=0;i<children.size();i++){
 				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
 				if(heuristica > h){
 					index = i;
 					h = heuristica;
 				}
+			}
 			return index;
 		}
 		public int getMinHeuristica(){
@@ -103,12 +104,13 @@ public class Tree<T> {
 			int i;
 			int heuristica = 0;
 			
-			for(i=0;i<children.size();i++)
+			for(i=0;i<children.size();i++){
 				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
 				if(heuristica < h){
 					index = i;
 					h = heuristica;
 				}
+			}
 			return index;
 		}
 }

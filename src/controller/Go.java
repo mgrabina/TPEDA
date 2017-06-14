@@ -373,19 +373,19 @@ public class Go {
 				
 				if(((ArrayList<Move>)tree.getValue()).size() != 0){
 				
-				ArrayList<Move> movimientos = tree.getValue();
-
-				int sizeMovimientos = movimientos.size();
-				
-				Move movimientoActual = movimientos.get(sizeMovimientos - 1);
-				
-				ArrayList<Move> movimientosHijo = (ArrayList<Move>)tree.getChildren().get(indexMax).getValue();
-				
-				int sizeMovimientosHijo = ((ArrayList<Move>)tree.getChildren().get(indexMax).getValue()).size();
-				
-				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
-
-				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
+					ArrayList<Move> movimientos = tree.getValue();
+	
+					int sizeMovimientos = movimientos.size();
+					
+					Move movimientoActual = movimientos.get(sizeMovimientos - 1);
+					
+					ArrayList<Move> movimientosHijo = (ArrayList<Move>)tree.getChildren().get(indexMax).getValue();
+					
+					int sizeMovimientosHijo = ((ArrayList<Move>)tree.getChildren().get(indexMax).getValue()).size();
+					
+					Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
+	
+					movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
 				}
 				
 				return indexMax;
