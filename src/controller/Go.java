@@ -330,7 +330,7 @@ public class Go {
 		Ficha f = movimientoHijo.getFicha();
 		int a[]= new int[2];
 		a[0]=f.getFila();
-		a[0]=f.getColumna();
+		a[1]=f.getColumna();
 		return a;
 	}
 
