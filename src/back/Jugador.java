@@ -13,6 +13,12 @@ public class Jugador {
 		this.color=color;
 	}
 	
+	
+	public void setPuntos(int puntos) {
+		this.puntos = puntos;
+	}
+
+
 	public boolean getColor() {
 		return color;
 	}

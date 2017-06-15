@@ -47,7 +47,7 @@ public class Go {
 		next=this.persona;
 	}
 	
-	public boolean mover(int fila, int columna, Jugador j){
+	public boolean mover(int fila, int columna, Jugador j,boolean real){
 		boolean a;
 		boolean b;
 		if(tablero.getFicha(fila, columna) != null)
@@ -68,19 +68,23 @@ public class Go {
 		if(a){
 			tablero.agregarFicha(j, fila, columna);
 			for(Ficha fic: fichasacomer){
-				comer(fic.getFila(),fic.getColumna(),fic.getColor());
+				comer(fic.getFila(),fic.getColumna(),fic.getColor(),real);
 			}
-			System.out.println("PuntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
+			//System.out.println("PuntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
 			return true;
 		}
 		if(b){
 			tablero.agregarFicha(j, fila, columna);
-			System.out.println("PuntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
+			//System.out.println("PuntosCP:" + maquina.getPuntos() + ", puntosPlayer:" + persona.getPuntos());
 			return true;
 		}
 		return false;
 	}
 		
+	public void setTablero(Tablero tablero) {
+		this.tablero = tablero;
+	}
+
 	private boolean puedoComerFichas(int fila, int columna, Jugador j) {
 		tablero.agregarFicha(j, fila, columna);
 		
@@ -131,7 +135,7 @@ public class Go {
 		return false;
 	}
 
-	private void comer(int fila, int columna, boolean color) {
+	private void comer(int fila, int columna, boolean color,boolean real) {
 		int izq, der, arr, abj;
 		Ficha f;
 		
@@ -146,26 +150,27 @@ public class Go {
 			persona.agregarPuntos(1);
 		
 		tablero.sacarFicha(fila, columna);
-		GUI.sacarFicha(fila, columna);
+		if(real)
+			GUI.sacarFicha(fila, columna);
 		
 		for (int l = columna - izq; l <= columna + der; l++) {
 			f = tablero.getFicha(fila, l);
 			if (f != null && f.getColor() == color) {
-				comer(fila, l, color);
+				comer(fila, l, color,real);
 			}
 		}
 		
 		if (arr == 1) {
 			f = tablero.getFicha(fila - 1, columna);
 			if (f != null && f.getColor() == color) {
-				comer(fila - 1, columna, color);
+				comer(fila - 1, columna, color,real);
 			}
 		}
 		
 		if (abj == 1) {
 			f = tablero.getFicha(fila + 1, columna);
 			if (f != null && f.getColor() == color) {
-				comer(fila + 1, columna, color);
+				comer(fila + 1, columna, color,real);
 			}
 		}
 	}
@@ -339,7 +344,7 @@ public class Go {
 	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color){
 		//aplicar heuristica
 		if(currentLevel == depth){
-			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica();
+			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica(tree.getValue());
 			
 			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).setHeuristica(heuristicaDeLaHoja);
 
@@ -385,7 +390,7 @@ public class Go {
 					
 					Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 	
-					movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
+					movimientoActual.setHeuristica(movimientoHijo.getHeuristica(tree.getValue()));
 				}
 				
 				return indexMax;
@@ -407,7 +412,7 @@ public class Go {
 				
 				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 
-				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
+				movimientoActual.setHeuristica(movimientoHijo.getHeuristica(tree.getValue()));
 				 }
 				 
 				return indexMin;

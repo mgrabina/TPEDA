@@ -90,7 +90,7 @@ public class Tree<T> {
 			int heuristica = 0;
 			
 			for(i=0;i<children.size();i++){
-				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
+				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica((ArrayList<Move>) value);
 				if(heuristica > h){
 					index = i;
 					h = heuristica;
@@ -105,7 +105,7 @@ public class Tree<T> {
 			int heuristica = 0;
 			
 			for(i=0;i<children.size();i++){
-				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
+				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica((ArrayList<Move>) value);
 				if(heuristica < h){
 					index = i;
 					h = heuristica;
