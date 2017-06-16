@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -466,5 +467,35 @@ public class Go {
 		
 		return false;
 	}
+	
+	public Tablero readFile(String path){
+		FileInputStream fIn = null;
+		try {
+			fIn = new FileInputStream(path);
+			Tablero t = new Tablero();
+			int c, index=0;
+			Jugador j = getPersona();
+			Jugador m = getMaquina();
+			while((c = fIn.read()) != -1){
+				switch (c) {
+				case 1:
+					t.agregarFicha(j, index/13, index%13);
+					break;
+				case 2:
+					t.agregarFicha(m, index/13, index%13);
+					break;
+				default:
+					t.agregarFicha(null, index/13, index%13);
+					break;
+				}					
+			}
+			fIn.close();
+			return t;
+		} catch (Exception e) {
+			System.out.println("Path no valido.");
+		}
+		return null;
+	}
+	
 }
 
