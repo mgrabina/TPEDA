@@ -173,7 +173,11 @@ public class Main {
 			}
 			break;
 		}
+		
+		
 */
+		game = new Go(username());
+		
 		Listeners listener = new Listeners(game);
 
 		// if(args[0]=="visual")
