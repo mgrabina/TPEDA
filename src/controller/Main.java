@@ -14,6 +14,8 @@ public class Main {
 		// java -jar tpe.jar (-visual | -file archivo -player n) (-maxtime n |
 		// -depth n) [-prune] [-tree]
 
+		/*
+		
 		int cantidadArgumentos = args.length;
 
 		if (cantidadArgumentos < 3 || cantidadArgumentos > 8 || cantidadArgumentos == 5) {
@@ -171,7 +173,7 @@ public class Main {
 			}
 			break;
 		}
-
+*/
 		Listeners listener = new Listeners(game);
 
 		// if(args[0]=="visual")
@@ -197,6 +199,8 @@ public class Main {
 				"java -jar tpe.jar (-visual | -file archivo -player n) (-maxtime n | -depth n) [-prune] [-tree]");
 		System.out.println("Saliendo del programa");
 	}
+	
+	
 
 	public static Go obtenerGo() {
 		return game;
