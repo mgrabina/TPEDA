@@ -41,6 +41,14 @@ public class Move {
 				j=Main.obtenerGo().getPersona();
 			Main.obtenerGo().mover(m.getFicha().getFila(), m.getFicha().getColumna(), j,false);
 		}
+		
+		if(f.getColor())
+			j= Main.obtenerGo().getMaquina();
+		else
+			j=Main.obtenerGo().getPersona();
+		Main.obtenerGo().mover(f.getFila(), f.getColumna(), j,false);
+
+		
 		if(f.getColor())
 			heuristica = Math.abs(Main.obtenerGo().obtenerPuntajes());
 		else
@@ -49,6 +57,7 @@ public class Move {
 		Main.obtenerGo().getMaquina().setPuntos(puntm);
 		Main.obtenerGo().getPersona().setPuntos(puntj);
 		System.out.println(heuristica);
+		
 		
 		return heuristica;
 	}
