@@ -2,6 +2,7 @@ package controller;
 
 import front.*;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -14,7 +15,6 @@ public class Main {
 		// java -jar tpe.jar (-visual | -file archivo -player n) (-maxtime n |
 		// -depth n) [-prune] [-tree]
 
-		/*
 		
 		int cantidadArgumentos = args.length;
 
@@ -91,8 +91,11 @@ public class Main {
 
 		case 6: case 7: case 8:
 			if (args[0].equals("-file")) {
-				// si args[1] es un file existente
-
+				Tablero t = readFile(args[1]);
+				
+				if(t == null)
+					return;
+				
 				if (args[2].equals("-player")) {
 					int player = Integer.parseInt(args[3]);
 					if (player == 1 || player == 2) {
@@ -116,10 +119,12 @@ public class Main {
 								}
 								
 								if((cantidadArgumentos == 7 && args[6].equals("-tree")) || (cantidadArgumentos == 8) && args[7].equals("-tree") ){
-									// game = new Go(player, n, true);
+									game = new Go(player, n, t, true);
+									return;
 								}
 								
-								// game = new Go(player, n, false);
+								game = new Go(player, n, t, false);
+								return;
 
 							} catch (NumberFormatException e) {
 								mensajeErrorParametros();
@@ -145,10 +150,12 @@ public class Main {
 								}
 								
 								if((cantidadArgumentos == 7 && args[6].equals("-tree")) || (cantidadArgumentos == 8) && args[7].equals("-tree") ){
-									// game = new Go(player, n, true);
+									game = new Go(player, n, t, true);
+									return;
 								}
 								
-								// game = new Go(player, n, false);
+								game = new Go(player, n, t, false);
+								return;
 
 							} catch (NumberFormatException e) {
 								mensajeErrorParametros();
@@ -171,12 +178,7 @@ public class Main {
 				mensajeErrorParametros();
 				return;
 			}
-			break;
 		}
-		
-		
-*/
-		game = new Go(username());
 		
 		Listeners listener = new Listeners(game);
 
@@ -186,6 +188,35 @@ public class Main {
 		// Por consola con parametros file y player
 		// }
 
+	}
+	
+	private static Tablero readFile(String path){
+		FileInputStream fIn = null;
+		try {
+			fIn = new FileInputStream(path);
+			Tablero t = new Tablero();
+			int c, index=0;
+			Jugador j = new Jugador("Jugador 1", false, false);
+			Jugador m = new Jugador("Jugador 2", true,true);
+			while((c = fIn.read()) != -1){
+				switch (c) {
+				case 1:
+					t.agregarFicha(j, index/13, index%13);
+					break;
+				case 2:
+					t.agregarFicha(m, index/13, index%13);
+					break;
+				default:
+					t.agregarFicha(null, index/13, index%13);
+					break;
+				}					
+			}
+			fIn.close();
+			return t;
+		} catch (Exception e) {
+			System.out.println("Path no valido.");
+			return null;
+		}
 	}
 
 	private static String username() {
@@ -210,4 +241,3 @@ public class Main {
 		return game;
 	}
 }
-

@@ -27,7 +27,7 @@ public class Listeners {
 				
 				//Turno Maquina
 				game.setNext(game.getMaquina());
-				mov=game.MINIMAX(game.getNext(),2);	//Obtiene el movimiento a hacer
+				mov=game.MINIMAX(game.getNext());	//Obtiene el movimiento a hacer
 				game.mover(mov[0], mov[1], game.getNext(),true);
 				agregarFicha(mov[0],mov[1]);
 				game.setNext(game.getPersona());
