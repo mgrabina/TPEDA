@@ -17,6 +17,8 @@ public class Go {
 	private Jugador maquina = new Jugador("Maquina", true,true);
 	private Jugador persona;
 	private Jugador next;
+	private Long tiempo = null;
+	private Integer depth = null;
 	private Tablero tablero = new Tablero();
 	boolean ko;
 	List<Ficha> fichasacomer=new LinkedList<Ficha>();
@@ -47,6 +49,20 @@ public class Go {
 		next=this.persona;
 	}
 	
+	public Go(String username, long n) {
+		this.persona = new Jugador(username, false, false);
+		ko=false;
+		next=this.persona;
+		tiempo = n;
+	}
+	
+	public Go(String username, int n) {
+		this.persona = new Jugador(username, false, false);
+		ko=false;
+		next=this.persona;
+		depth = n;
+	}
+
 	public boolean mover(int fila, int columna, Jugador j,boolean real){
 		boolean a;
 		boolean b;
