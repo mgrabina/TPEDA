@@ -47,7 +47,6 @@ public class Listeners {
 	private static void agregarFicha(int fil, int col){
 		GUI.ponerFicha(((game.getNext().getColor()==true)?true:false), fil, col);
 		game.getTablero().agregarFicha(game.getNext(), fil, col);
-		game.getNext().agregarPuntos(1);
 		GUI.actualizarPuntajes(game.getPersona().getNombre(), game.getPersona().getPuntos(), game.getMaquina().getPuntos());
 	}
 	
