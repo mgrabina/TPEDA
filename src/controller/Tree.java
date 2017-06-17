@@ -3,6 +3,9 @@ package controller;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.Stack;
 
 import sun.misc.Queue;
@@ -51,8 +54,11 @@ public class Tree<T> {
 			if(flag){
 				if(!cola.isEmpty()){
 					aux = cola.dequeue();
+					Move m = null;
+					if(((ArrayList<Move>)aux.value).size() != 0)
+						m =  ((ArrayList<Move>)aux.value).get(0);
 					for (i=0;i<aux.children.size();i++) {
-						writer.println(aux.value +" -> "+ ((Tree)aux.children.get(i)).value + ";");
+						writer.println(m +" -> "+ ((Tree)aux.children.get(i)).value + ";");
 						cola2.enqueue(((Tree)aux.children.get(i)));
 					}
 				}else{
@@ -62,8 +68,11 @@ public class Tree<T> {
 				if(!cola2.isEmpty()){
 					aux = cola2.dequeue();
 					writer.println(aux.value + " [shape=box]");
+					Move m = null;
+					if(((ArrayList<Move>)aux.value).size() != 0)
+						m =  ((ArrayList<Move>)aux.value).get(0);
 					for (i=0;i<aux.children.size();i++) {
-						writer.println(aux.value +" -> "+ ((Tree)aux.children.get(i)).value + ";");
+						writer.println(m +" -> "+ ((Tree)aux.children.get(i)).value + ";");
 						cola.enqueue(((Tree)aux.children.get(i)));
 					}
 				}else{
@@ -85,32 +94,34 @@ public class Tree<T> {
 	//INDEXES MAX Y MIN DEL CHILDREN
 		public int getMaxHeuristica(){
 			int index=0;
-			int h=0;
+			int maxH=0;
 			int i;
 			int heuristica = 0;
-			
+			LinkedList<Integer> l = new LinkedList<>();
 			for(i=0;i<children.size();i++){
 				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica((ArrayList<Move>) value);
-				if(heuristica > h){
-					index = i;
-					h = heuristica;
-				}
+				if(heuristica > maxH){
+					l = new LinkedList<>();
+					l.add(i);
+					maxH = heuristica;
+				}else if(heuristica == maxH) l.add(i);
 			}
-			return index;
+			return l.get(new Random().nextInt(l.size()));
 		}
 		public int getMinHeuristica(){
 			int index=0;
-			int h=0;
+			int minH = 999999; //Inalcanzable por heuristica
 			int i;
 			int heuristica = 0;
-			
+			LinkedList<Integer> l = new LinkedList<>();
 			for(i=0;i<children.size();i++){
 				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica((ArrayList<Move>) value);
-				if(heuristica < h){
-					index = i;
-					h = heuristica;
-				}
+				if(heuristica < minH){
+					l = new LinkedList<>();
+					l.add(i);
+					minH = heuristica;
+				}else if(heuristica == minH) l.add(i);
 			}
-			return index;
+			return l.get(new Random().nextInt(l.size()));
 		}
 }

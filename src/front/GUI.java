@@ -33,6 +33,8 @@ public class GUI {
 	public static final Integer TAMANIOCASILLERO=ALTO/TAMANIO;
 	public static final Color BACKGROUNDCOLOR = Color.yellow;
 	public static final String PATH = new File("").getAbsolutePath();
+	private static JLabel loading;
+	
 	public static void iniciar() {
 		Integer i,j;
 		ventana = new JFrame("Tablero");
@@ -56,6 +58,7 @@ public class GUI {
 		titulo.setHorizontalAlignment((int) titulo.CENTER_ALIGNMENT);
 		titulo.setForeground(Color.white);
 		titulo.setFont(new Font("Verdana", Font.BOLD, 50));
+		
 		
 		JLabel pie = new JLabel("Varela - Tay - Grethe - Grabina - Mosquera");
 		pie.setBounds(0, 900, 500, 100);
@@ -91,11 +94,19 @@ public class GUI {
 		puntajes.setForeground(Color.black);
 		puntajes.setFont(new Font("Verdana", Font.PLAIN, 40));
 		
+		loading = new JLabel("Loading...");
+		loading.setBounds(0, 400, 500, 100);
+		loading.setHorizontalAlignment((int) loading.CENTER_ALIGNMENT);
+		loading.setForeground(Color.black);
+		loading.setFont(new Font("Verdana", Font.BOLD, 15));
+		loading.setVisible(false);
+		
 		controles.add(titulo);
 		controles.add(generarDotButton);
 		controles.add(pasar);
 		controles.add(puntajes);
 		controles.add(pie);
+		controles.add(loading);
 		
 		tablero = new GridLayout(TAMANIO, TAMANIO);
 		ventana.setLayout(tablero);
@@ -128,11 +139,13 @@ public class GUI {
 		casilleros[i][j].setBorder(null);
 		casilleros[i][j].setBackground(BACKGROUNDCOLOR);
 	}
-	public static void actualizarPuntajes(int puntosJugador, int puntosMaquina){
-		puntajes.setText("Jugador "+ puntosJugador + " - " + puntosMaquina + " Maquina");
+	public static void actualizarPuntajes(String nombre, int puntosJugador, int puntosMaquina){
+		puntajes.setText(nombre+" "+ puntosJugador + " - " + puntosMaquina + " Maquina");
 	}
 	public static void alertarGanador(String texto){
 		JDialog alerta = new JDialog(controles, texto);
 	}
-	
+	public static void loading(boolean state){
+		loading.setVisible(state);
+	}
 }

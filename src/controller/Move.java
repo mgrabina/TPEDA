@@ -13,7 +13,7 @@ public class Move {
 	
 	public Move(Ficha f) {
 		this.f = f;
-		
+		heuristica = -1;
 	}
 	
 	public int getHeuristica(ArrayList<Move> movimientosAnteriores){
@@ -56,17 +56,17 @@ public class Move {
 		Main.obtenerGo().setTablero(original);
 		Main.obtenerGo().getMaquina().setPuntos(puntm);
 		Main.obtenerGo().getPersona().setPuntos(puntj);
-		System.out.println(heuristica);
+		//System.out.println(heuristica);
 		
 		
 		return heuristica;
 	}
 	
 
-//	@Override
-//	public String toString() {
-//		return "("+movimientos.get(movimientos.size()-1).getKey()+","+movimientos.get(movimientos.size()-1).getValue()+") "+heuristica;
-//	}
+	@Override
+	public String toString() {
+		return "("+f.getFila()+","+f.getColumna()+") "+heuristica;
+	}
 
 	
 	

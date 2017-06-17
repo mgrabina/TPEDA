@@ -213,9 +213,9 @@ public class Go {
 		abj = (12 == fila) ? 0 : 1;
 		
 		if(color)
-			maquina.agregarPuntos(1);
-		else
 			persona.agregarPuntos(1);
+		else
+			maquina.agregarPuntos(1);
 		
 		tablero.sacarFicha(fila, columna);
 		if(real)
@@ -414,7 +414,7 @@ public class Go {
 		
 		ArrayList<Move> movimientosHijo = (ArrayList<Move>)t.getChildren().get(index).getValue();
 		Move movimientoHijo = movimientosHijo.get(((ArrayList<Move>)t.getChildren().get(index).getValue()).size() - 1);
-		
+		if(crearDot){
 		try {
 			t.generarDOT();
 		} catch (FileNotFoundException e) {
@@ -422,7 +422,7 @@ public class Go {
 		} catch (InterruptedException e) {
 			System.out.println("Se interrumpió la creación del .dot");
 		}
-		
+		}
 		Ficha f = movimientoHijo.getFicha();
 		int a[]= new int[2];
 		a[0]=f.getFila();
