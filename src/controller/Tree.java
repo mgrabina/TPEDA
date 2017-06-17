@@ -51,28 +51,30 @@ public class Tree<T> {
 		boolean flag = true;
 		while(!(cola.isEmpty() && cola2.isEmpty())){
 			Tree aux;
-			if(flag){
+			if(flag){										//Alterno niveles 
 				if(!cola.isEmpty()){
 					aux = cola.dequeue();
 					Move m = null;
-					if(((ArrayList<Move>)aux.value).size() != 0)
-						m =  ((ArrayList<Move>)aux.value).get(0);
+					if(((ArrayList<Move>)aux.value).size() != 0) m = ((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1);
 					for (i=0;i<aux.children.size();i++) {
-						writer.println(m +" -> "+ ((Tree)aux.children.get(i)).value + ";");
+						Move c = null;
+						c = ((ArrayList<Move>)((Tree)aux.children.get(i)).value).get(((ArrayList<Move>)((Tree)aux.children.get(i)).value).size()-1);
+						writer.println((m==null)?"START":m +" -> "+ c + ";");
 						cola2.enqueue(((Tree)aux.children.get(i)));
 					}
 				}else{
 					flag=!flag;
 				}
 			}else{
-				if(!cola2.isEmpty()){
+				if(!cola2.isEmpty()){							//Niveles de nodos cuadrados
 					aux = cola2.dequeue();
-					writer.println(aux.value + " [shape=box]");
 					Move m = null;
-					if(((ArrayList<Move>)aux.value).size() != 0)
-						m =  ((ArrayList<Move>)aux.value).get(0);
+					if(((ArrayList<Move>)aux.value).size() != 0) m = ((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1);
+					writer.println(((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1) + " [shape=box]");
 					for (i=0;i<aux.children.size();i++) {
-						writer.println(m +" -> "+ ((Tree)aux.children.get(i)).value + ";");
+						Move c = null;
+						c = ((ArrayList<Move>)((Tree)aux.children.get(i)).value).get(((ArrayList<Move>)((Tree)aux.children.get(i)).value).size()-1);
+						writer.println((m==null)?"START":m +" -> "+ c + ";");
 						cola.enqueue(((Tree)aux.children.get(i)));
 					}
 				}else{

@@ -18,18 +18,24 @@ public class Listeners {
 		GUI.loading(false);
 	}
 	public static void pasarClicked(){
-		turnoMaquina();
-		game.setNext(game.getPersona());
+		if(game.getMaquina().getPuntos()<=game.getPersona().getPuntos()){
+			turnoMaquina();
+			game.setNext(game.getPersona());
+		}else{
+			GUI.alertarGanador("Fin del juego.");
+			System.exit(1);
+		}
 	}
 	private static void turnoMaquina(){
+		GUI.loading(true);
 		int mov[] = new int[2];
 		//Turno Maquina
 		game.setNext(game.getMaquina());
-		GUI.loading(true);
 		mov=game.MINIMAX(game.getNext(), false);	//Obtiene el movimiento a hacer
-		GUI.loading(false);
 		game.mover(mov[0], mov[1], game.getNext(),true);
 		agregarFicha(mov[0],mov[1]);
+		GUI.loading(false);
+		
 	}
 	public static void llamadaDeCasillero(int fil, int col){
 		int mov[]=new int[2];
