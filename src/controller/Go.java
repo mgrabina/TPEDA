@@ -394,7 +394,7 @@ public class Go {
 	}
 	
 	public int obtenerPuntajes(){
-		return persona.getPuntos() - maquina.getPuntos();
+		return maquina.getPuntos() - persona.getPuntos();
 	}
 	
 	int[] MINIMAX(Jugador j, boolean crearDot){
@@ -402,7 +402,7 @@ public class Go {
 		Tree<ArrayList<Move>> t = new Tree<ArrayList<Move>>(new ArrayList<Move>());
 		int index;
 		
-		Long start = System.currentTimeMillis();
+		//Long start = System.currentTimeMillis();
 		
 		if(depth != null){
 			index = minimax(t, depth, 0, j.getColor());
@@ -410,7 +410,7 @@ public class Go {
 			index = minimax(t,DEPTHDEFAULT, 0, j.getColor(), time);
 		}
 		
-		System.out.println(System.currentTimeMillis() - start);
+		//System.out.println(System.currentTimeMillis() - start);
 		
 		ArrayList<Move> movimientosHijo = (ArrayList<Move>)t.getChildren().get(index).getValue();
 		Move movimientoHijo = movimientosHijo.get(((ArrayList<Move>)t.getChildren().get(index).getValue()).size() - 1);
@@ -435,7 +435,7 @@ public class Go {
 	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color){
 		//aplicar heuristica
 		if(currentLevel == depth){
-			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica(tree.getValue());
+			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).heuristica(tree.getValue());
 			
 			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).setHeuristica(heuristicaDeLaHoja);
 
@@ -480,7 +480,7 @@ public class Go {
 					
 				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 	
-				movimientoActual.setHeuristica(movimientoHijo.getHeuristica(tree.getValue()));
+				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
 			}
 				
 			return indexMax;
@@ -502,7 +502,7 @@ public class Go {
 				
 				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 
-				movimientoActual.setHeuristica(movimientoHijo.getHeuristica(tree.getValue()));
+				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
 			}
 				 
 			return indexMin;
@@ -513,7 +513,7 @@ public class Go {
 		Double start = (double) (System.currentTimeMillis()/1000);
 		//aplicar heuristica
 		if(currentLevel == depth){
-			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).getHeuristica(tree.getValue());
+			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).heuristica(tree.getValue());
 					
 			((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).setHeuristica(heuristicaDeLaHoja);
 
@@ -561,7 +561,7 @@ public class Go {
 							
 				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 			
-				movimientoActual.setHeuristica(movimientoHijo.getHeuristica(tree.getValue()));
+				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
 			}
 						
 			return indexMax;
@@ -583,7 +583,7 @@ public class Go {
 						
 				Move movimientoHijo = movimientosHijo.get(sizeMovimientosHijo - 1);
 
-				movimientoActual.setHeuristica(movimientoHijo.getHeuristica(tree.getValue()));
+				movimientoActual.setHeuristica(movimientoHijo.getHeuristica());
 			}
 						 
 			return indexMin;

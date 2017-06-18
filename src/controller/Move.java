@@ -16,8 +16,8 @@ public class Move {
 		heuristica = -1;
 	}
 	
-	public int getHeuristica(ArrayList<Move> movimientosAnteriores){
-		return heuristica(movimientosAnteriores);
+	public int getHeuristica(){
+		return heuristica;
 	}
 	
 	public Ficha getFicha(){
@@ -28,7 +28,7 @@ public class Move {
 		heuristica = h;
 	}
 	
-	private int heuristica(ArrayList<Move> movimientosAnteriores){
+	public int heuristica(ArrayList<Move> movimientosAnteriores){
 		//Heuristica base: Diferencia de puntaje actual, respecto del jugador que realiza el movimiento.
 		Jugador j;
 		Tablero original=Main.obtenerGo().getTablero().clone();
@@ -48,11 +48,15 @@ public class Move {
 		else
 			j=Main.obtenerGo().getPersona();
 		Main.obtenerGo().mover(f.getFila(), f.getColumna(), j,false);
-
-		if(f.getColor())
+		
+		/*if(f.getColor())
 			heuristica = -Main.obtenerGo().obtenerPuntajes()+punt;
 		else
 			heuristica = Main.obtenerGo().obtenerPuntajes()-punt;
+		*/
+		
+		heuristica = Main.obtenerGo().obtenerPuntajes();
+		
 		Main.obtenerGo().setTablero(original);
 		Main.obtenerGo().getMaquina().setPuntos(puntm);
 		Main.obtenerGo().getPersona().setPuntos(puntj);

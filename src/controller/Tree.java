@@ -102,7 +102,7 @@ public class Tree<T> {
 			boolean flag=true;
 			LinkedList<Integer> l = new LinkedList<>();
 			for(i=0;i<children.size() && flag;i++){
-				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica((ArrayList<Move>) value);
+				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
 				if(heuristica > maxH){
 					l = new LinkedList<>();
 					l.add(i);
@@ -121,7 +121,7 @@ public class Tree<T> {
 			boolean flag=true;
 			LinkedList<Integer> l = new LinkedList<>();
 			for(i=0;i<children.size() && flag ;i++){
-				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica((ArrayList<Move>) value);
+				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
 				if(heuristica < minH){
 					l = new LinkedList<>();
 					l.add(i);
