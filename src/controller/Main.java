@@ -1,7 +1,7 @@
 package controller;
-
 import front.*;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -15,7 +15,6 @@ public class Main {
 		// java -jar tpe.jar (-visual | -file archivo -player n) (-maxtime n |
 		// -depth n) [-prune] [-tree]
 
-		
 		int cantidadArgumentos = args.length;
 
 		if (cantidadArgumentos < 3 || cantidadArgumentos > 8 || cantidadArgumentos == 5) {
@@ -122,7 +121,6 @@ public class Main {
 									game = new Go(player, n, t, true);
 									return;
 								}
-								
 								game = new Go(player, n, t, false);
 								return;
 
@@ -153,8 +151,9 @@ public class Main {
 									game = new Go(player, n, t, true);
 									return;
 								}
-								
+								////////
 								game = new Go(player, n, t, false);
+								System.out.println(game);
 								return;
 
 							} catch (NumberFormatException e) {
@@ -190,31 +189,33 @@ public class Main {
 
 	}
 	
-	private static Tablero readFile(String path){
+	private static Tablero readFile(String p){
 		FileInputStream fIn = null;
+		final String path = System.getProperty("user.dir");
 		try {
-			fIn = new FileInputStream(path);
+
+			String fullPath = path + "\\"+p;
+			fIn = new FileInputStream(fullPath);
 			Tablero t = new Tablero();
 			int c, index=0;
 			Jugador j = new Jugador("Jugador 1", false, false);
 			Jugador m = new Jugador("Jugador 2", true,true);
-			while((c = fIn.read()) != -1){
+			while(index != 169){
+				c = fIn.read();
 				switch (c) {
-				case 1:
+				case 49:
 					t.agregarFicha(j, index/13, index%13);
 					break;
-				case 2:
+				case 50:
 					t.agregarFicha(m, index/13, index%13);
 					break;
-				default:
-					t.agregarFicha(null, index/13, index%13);
-					break;
-				}					
+				}
+				index++;
 			}
 			fIn.close();
 			return t;
 		} catch (Exception e) {
-			System.out.println("Path no valido.");
+			System.out.println(e.toString());
 			return null;
 		}
 	}
