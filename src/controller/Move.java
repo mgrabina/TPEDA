@@ -34,7 +34,7 @@ public class Move {
 		Tablero original=Main.obtenerGo().getTablero().clone();
 		int puntm=Main.obtenerGo().getMaquina().getPuntos();
 		int puntj=Main.obtenerGo().getPersona().getPuntos();
-		int punt=puntj-puntm;
+		int punt=-puntj+puntm;
 		for(Move m: movimientosAnteriores){
 			if(m.getFicha().getColor())
 				j= Main.obtenerGo().getMaquina();
@@ -55,7 +55,7 @@ public class Move {
 			heuristica = Main.obtenerGo().obtenerPuntajes()-punt;
 		*/
 		
-		heuristica = Main.obtenerGo().obtenerPuntajes();
+		heuristica = Main.obtenerGo().obtenerPuntajes()-punt;
 		
 		Main.obtenerGo().setTablero(original);
 		Main.obtenerGo().getMaquina().setPuntos(puntm);
