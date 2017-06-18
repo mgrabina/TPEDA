@@ -107,8 +107,8 @@ public class Tree<T> {
 					l = new LinkedList<>();
 					l.add(i);
 					maxH = heuristica;
-					if(maxH>0)
-						flag=false;
+					//if(maxH>0)
+						//flag=false;
 				}else if(heuristica == maxH) l.add(i);
 			}
 			return l.get(new Random().nextInt(l.size()));
@@ -126,8 +126,8 @@ public class Tree<T> {
 					l = new LinkedList<>();
 					l.add(i);
 					minH = heuristica;
-					if(minH<0)
-						flag=false;
+					//if(minH<0)
+						//flag=false;
 				}else if(heuristica == minH) l.add(i);
 			}
 			return l.get(new Random().nextInt(l.size()));

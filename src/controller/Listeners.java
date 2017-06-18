@@ -42,8 +42,11 @@ public class Listeners {
 		if(!game.getNext().esMaquina())	//Si le toca a la persona
 			if(game.mover(fil, col, game.getNext(),true)){	//Si se puede hacer el movimiento que quiere
 				agregarFicha(fil, col);
+				long a= System.currentTimeMillis();
 				turnoMaquina();
+				System.out.println(System.currentTimeMillis()-a);
 				//Vuelve a persona
+				
 				game.setNext(game.getPersona());
 			}else{
 				GUI.alertarGanador("Movimiento no valido.");

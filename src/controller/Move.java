@@ -1,6 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import back.Ficha;
 import back.Jugador;
@@ -31,33 +31,42 @@ public class Move {
 	public int heuristica(ArrayList<Move> movimientosAnteriores){
 		//Heuristica base: Diferencia de puntaje actual, respecto del jugador que realiza el movimiento.
 		Jugador j;
-		Tablero original=Main.obtenerGo().getTablero().clone();
+		//Tablero original=Main.obtenerGo().getTablero().clone();
 		int puntm=Main.obtenerGo().getMaquina().getPuntos();
 		int puntj=Main.obtenerGo().getPersona().getPuntos();
 		int punt=-puntj+puntm;
+		List<List<Ficha>> set=new LinkedList<>();
+		//realizamos los movimientos
 		for(Move m: movimientosAnteriores){
 			if(m.getFicha().getColor())
 				j= Main.obtenerGo().getMaquina();
 			else
 				j=Main.obtenerGo().getPersona();
 			Main.obtenerGo().mover(m.getFicha().getFila(), m.getFicha().getColumna(), j,false);
+			if(!Main.obtenerGo().fichascomidas.isEmpty())
+				set.add((List<Ficha>) Main.obtenerGo().fichascomidas.clone());
 		}
-		
 		if(f.getColor())
 			j= Main.obtenerGo().getMaquina();
 		else
 			j=Main.obtenerGo().getPersona();
 		Main.obtenerGo().mover(f.getFila(), f.getColumna(), j,false);
-		
-		/*if(f.getColor())
-			heuristica = -Main.obtenerGo().obtenerPuntajes()+punt;
-		else
-			heuristica = Main.obtenerGo().obtenerPuntajes()-punt;
-		*/
-		
+		//calculamos la heuristica
 		heuristica = Main.obtenerGo().obtenerPuntajes()-punt;
 		
-		Main.obtenerGo().setTablero(original);
+		//seteamos el tablero original
+		for(List<Ficha> l: set){
+			for(Ficha f: l){
+				if(f.getColor())
+					j= Main.obtenerGo().getMaquina();
+				else
+					j=Main.obtenerGo().getPersona();
+				Main.obtenerGo().getTablero().agregarFicha(j, f.getFila(), f.getColumna());
+			}
+		}
+		for(Move m: movimientosAnteriores){
+			Main.obtenerGo().getTablero().sacarFicha(m.getFicha().getFila(), m.getFicha().getColumna());
+		}
 		Main.obtenerGo().getMaquina().setPuntos(puntm);
 		Main.obtenerGo().getPersona().setPuntos(puntj);
 		//System.out.println(heuristica);

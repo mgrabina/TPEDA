@@ -23,7 +23,8 @@ public class Go {
 	private Integer depth = null;
 	private Tablero tablero;
 	boolean ko;
-	List<Ficha> fichasacomer=new LinkedList<Ficha>();
+	LinkedList<Ficha> fichasacomer=new LinkedList<Ficha>();
+	LinkedList<Ficha> fichascomidas=new LinkedList<Ficha>();
 	Ficha knock;
 	public Jugador getNext() {
 		return next;
@@ -121,6 +122,7 @@ public class Go {
 		if(tablero.getFicha(fila, columna) != null)
 			return false;
 		fichasacomer.clear();
+		fichascomidas.clear();
 		a=puedoComerFichas(fila, columna, j);
 		b=noEsSuicidio(fila, columna, j);
 		if(a==true && b==false && ko==true && knock.getFila()==fila && knock.getColumna()==columna ){
@@ -218,6 +220,7 @@ public class Go {
 			maquina.agregarPuntos(1);
 		
 		tablero.sacarFicha(fila, columna);
+		fichascomidas.add(new Ficha(color, fila, columna));
 		if(real)
 			GUI.sacarFicha(fila, columna);
 		
