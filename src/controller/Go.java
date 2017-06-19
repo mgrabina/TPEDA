@@ -456,6 +456,8 @@ public class Go {
 			
 			if(((ArrayList<Move>)tree.getValue()).size() != 0){
 				
+				tree.getChildren().get(indexMax).setSelectedHeuristica(true);
+				
 				ArrayList<Move> movimientos = tree.getValue();
 	
 				int sizeMovimientos = movimientos.size();
@@ -477,6 +479,8 @@ public class Go {
 			int indexMin = tree.getMinHeuristica();
 			
 			if(((ArrayList<Move>)tree.getValue()).size() != 0){
+				
+				tree.getChildren().get(indexMin).setSelectedHeuristica(true);
 				
 				ArrayList<Move> movimientos = tree.getValue();
 				

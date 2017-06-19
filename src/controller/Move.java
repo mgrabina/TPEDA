@@ -78,7 +78,7 @@ public class Move {
 
 	@Override
 	public String toString() {
-		return "("+f.getFila()+","+f.getColumna()+") "+heuristica;
+		return "\"("+f.getFila()+","+f.getColumna()+") "+heuristica+'\"';
 	}
 
 	
