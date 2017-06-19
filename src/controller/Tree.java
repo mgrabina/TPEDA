@@ -13,6 +13,7 @@ import sun.misc.Queue;
 public class Tree<T> {
 	private T value;
 	private ArrayList<Tree<T>> children;
+	private boolean selectedHeuristica;
 	
 	public Tree(T value) {
 		this.value = value;
@@ -31,10 +32,18 @@ public class Tree<T> {
 		for (Tree<T> tree : children) {
 			if(tree.value.equals(value))
 				children.remove(tree);
-		}	
-	}
-	<V> V getValue(){
+			}	
+		}
+		<V> V getValue(){
 		return (V) value;
+	}
+	
+	public void setSelectedHeuristica(boolean b){
+		selectedHeuristica = b;
+	}
+	
+	public boolean getSelected(){
+		return selectedHeuristica;
 	}
 	
 	//Genera un documento .dot diferenciando por niveles el jugador imprimiento el valor de los nodos del arbol
@@ -56,10 +65,13 @@ public class Tree<T> {
 					aux = cola.dequeue();
 					Move m = null;
 					if(((ArrayList<Move>)aux.value).size() != 0) m = ((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1);
+					if(aux.getSelected())
+						writer.println(((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1) + " [color = red]");
+					
 					for (i=0;i<aux.children.size();i++) {
 						Move c = null;
 						c = ((ArrayList<Move>)((Tree)aux.children.get(i)).value).get(((ArrayList<Move>)((Tree)aux.children.get(i)).value).size()-1);
-						writer.println((m==null)?"START":m +" -> "+ c + ";");
+						writer.println(((m==null)?"START":m) +" -> "+ c + ";");
 						cola2.enqueue(((Tree)aux.children.get(i)));
 					}
 				}else{
@@ -70,7 +82,14 @@ public class Tree<T> {
 					aux = cola2.dequeue();
 					Move m = null;
 					if(((ArrayList<Move>)aux.value).size() != 0) m = ((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1);
+					
+					
 					writer.println(((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1) + " [shape=box]");
+					
+					
+					if(aux.getSelected())
+						writer.println(((ArrayList<Move>)aux.value).get(((ArrayList<Move>)aux.value).size()-1) + " [color = red]");
+						
 					for (i=0;i<aux.children.size();i++) {
 						Move c = null;
 						c = ((ArrayList<Move>)((Tree)aux.children.get(i)).value).get(((ArrayList<Move>)((Tree)aux.children.get(i)).value).size()-1);
