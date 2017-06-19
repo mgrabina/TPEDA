@@ -4,7 +4,7 @@ import controller.Main;
 
 public class Tablero {
 	private Ficha[][] tablero = new Ficha[13][13];
-	
+	private int fichast=0;
 	public Tablero(){
 		
 	}
@@ -12,14 +12,20 @@ public class Tablero {
 	public boolean agregarFicha(Jugador jug, int fil, int col){
 		if(tablero[fil][col] == null){
 			tablero[fil][col] = new Ficha(jug.getColor(), fil, col);
+			fichast++;
 			return true;
 		}
 		
 		return false;
 	}
 	
+	public int getFichast() {
+		return fichast;
+	}
+
 	public void sacarFicha(int fil, int col){
 		tablero[fil][col] = null;
+		fichast--;
 		return;
 	}
 	

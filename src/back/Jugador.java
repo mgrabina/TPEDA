@@ -3,10 +3,10 @@ package back;
 public class Jugador {
 
 	private String nombre;
-	private int puntos;
+	private int puntos=0;
 	private boolean maquina;
 	private boolean color;
-	
+	private int puntosT=0;
 	public Jugador(String nombre, boolean maquina, boolean color){
 		this.nombre = nombre;
 		this.maquina = maquina;
@@ -14,6 +14,25 @@ public class Jugador {
 	}
 	
 	
+	
+	
+	
+	public int getPuntosT() {
+		return puntosT;
+	}
+
+
+
+
+
+	public void setPuntosT(int puntosT) {
+		this.puntosT = puntosT;
+	}
+
+
+
+
+
 	public void setPuntos(int puntos) {
 		this.puntos = puntos;
 	}

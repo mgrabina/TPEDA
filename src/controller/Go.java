@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -279,98 +280,102 @@ public class Go {
 	}
 	
 	//devuelve la cantidad de casilleros en un territorio; si devuelve 0 entonces no es territorio
-	private int esTerritorioWR(int fila, int columna, Jugador j, boolean real){
-		List<Pair<Integer, Integer>> marcados = new LinkedList<Pair<Integer, Integer>>();
-		int resp = esTerritorio(fila, columna, marcados);
-		
-		if(resp == 1 || resp == 2){
-			if(real){
-				if(j.esMaquina())
-					maquina.agregarPuntos(marcados.size());
-				else
-					persona.agregarPuntos(marcados.size());
+	HashSet<Par> marcados=new HashSet<>(); 
+	int estado=0;
+	public void esTerritorioWR(){
+		marcados.clear();
+		maquina.setPuntosT(0);
+		persona.setPuntosT(0);
+		for(int x=0;x<13;x++)
+			for(int y=0; y<13;y++){
+				if(tablero.getFicha(x, y)==null && !marcados.contains(new Par(x,y))){
+					//System.out.println(" "+x+" "+y);
+					int size= marcados.size();
+					estado=0;
+					esTerritorio(x, y);
+					int punt=marcados.size()-size;
+					if(estado==1){
+						maquina.setPuntosT(maquina.getPuntosT()+punt);
+					}else if(estado==-1){
+						persona.setPuntosT(persona.getPuntosT()+punt);
+					}
+				}
 			}
-		}
 		
-		return marcados.size();
 		
 	}
 	
-	private int esTerritorio(int fila, int columna, List<Pair<Integer, Integer>> marcados){
-		boolean izqB, derB, arrB, abjB;
-		Pair<Integer, Integer> pair = new Pair<Integer, Integer>(fila, columna);
-		marcados.add(pair);
-		
-		izqB = !(columna == 0);
-		derB = !(columna == 12);
-		arrB = !(fila == 0);
-		abjB = !(fila == 12);
-		int izqR = 0, derR = 0, arrR = 0, abjR = 0;
-		
-		if(izqB){
-			Ficha izq = tablero.getFicha(fila, columna - 1);
-			Pair<Integer, Integer> izqP = new Pair<Integer, Integer>(fila, columna - 1);
-			if(!marcados.contains(izqP)){
-				if(izq != null){
-					if(izq.getColor() == true)
-						izqR = 1;
-					else
-						izqR = 2;
+	private void esTerritorio(int x, int y){
+		marcados.add(new Par(x,y));
+		int	izq = (y == 0)?0:1;
+		int der = (y == 12)?0:1;
+		int arr = (x == 0)?0:1;
+		int abj = (x == 12)?0:1;
+		if(estado!=-2){
+			//aaSystem.out.println(""+x+y);
+			for(int col=y-izq; col<=y+der;col++){
+				if(tablero.getFicha(x, col)!=null && col!=y){
+					if(tablero.getFicha(x, col).getColor()){
+						if(estado==0 || estado==1){
+							estado=1;
+						}else{
+							estado=-2;
+						}
+					}else{
+						if(estado==0|| estado==-1)
+							estado=-1;
+						else
+							estado=-2;
+					}
 				}
-				else
-					izqR = esTerritorio(fila, columna - 1, marcados);				
 			}
-		}
-		
-		if(derB){
-			Ficha der = tablero.getFicha(fila, columna + 1);
-			Pair<Integer, Integer> derP = new Pair<Integer, Integer>(fila, columna + 1);
-			if(!marcados.contains(derP)){
-				if(der != null){
-					if(der.getColor() == true)
-						derR = 1;
-					else
-						derR = 2;
+			if(arr==1){
+				if(tablero.getFicha(x-1, y)!=null){
+					if(tablero.getFicha(x-1, y).getColor()){
+						if(estado==0 || estado==1)
+							estado=1;
+						else
+							estado=-2;
+					}else{
+						if(estado==0|| estado==-1)
+							estado=-1;
+						else
+							estado=-2;
+					}
 				}
-				else
-					derR = esTerritorio(fila, columna + 1, marcados);
 			}
-		}
-		
-		if(arrB){
-			Ficha arr = tablero.getFicha(fila - 1, columna);
-			Pair<Integer, Integer> arrP = new Pair<Integer, Integer>(fila - 1, columna);
-			if(!marcados.contains(arrP)){
-				if(arr != null){
-					if(arr.getColor() == true)
-						arrR = 1;
-					else
-						arrR = 2;
+			//System.out.println(""+x+y);
+			if(abj==1){				
+				if(tablero.getFicha(x+1, y)!=null){
+					if(tablero.getFicha(x+1, y).getColor()){
+						if(estado==0 || estado==1)
+							estado=1;
+						else
+							estado=-2;
+					}else{
+						if(estado==0|| estado==-1)
+							estado=-1;
+						else
+							estado=-2;
+					}
 				}
-				else
-					arrR = esTerritorio(fila - 1, columna, marcados);
-			}
+			}	
 		}
-		
-		if(abjB){
-			Ficha abj = tablero.getFicha(fila + 1, columna);
-			Pair<Integer, Integer> abjP = new Pair<Integer, Integer>(fila + 1, columna);
-			if(!marcados.contains(abjP)){	
-				if(abj != null){
-					if(abj.getColor() == true)
-						abjR = 1;
-					else
-						abjR = 2;
+		for(int col=y-izq; col<=y+der;col++)
+			if(tablero.getFicha(x, col)==null)
+				if(!marcados.contains(new Par(x,col))){
+					esTerritorio(x, col);
 				}
-				else
-					abjR = esTerritorio(fila + 1, columna, marcados);
-			}
-		}
-		
-		if(izqR + derR == 3 || izqR + arrR == 3 || izqR + abjR == 3 || derR + arrR == 3 || derR + abjR == 3 || arrR + abjR == 3 || izqR == 3 || derR == 3 || arrR == 3 || abjR == 3)
-			return 3;
-		else
-			return Math.max(Math.max(izqR, derR), Math.max(arrR, abjR));
+		if(arr==1)
+			if(tablero.getFicha(x-1, y)==null)
+				if(!marcados.contains(new Par(x-1,y))){
+					esTerritorio(x-1,y);
+				}
+		if(abj==1)
+			if(tablero.getFicha(x+1, y)==null)
+				if(!marcados.contains(new Par(x+1,y))){
+					esTerritorio(x+1,y);
+				}
 		
 	}
 	

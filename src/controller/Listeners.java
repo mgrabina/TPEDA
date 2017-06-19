@@ -33,6 +33,7 @@ public class Listeners {
 		game.setNext(game.getMaquina());
 		mov=game.MINIMAX(game.getNext(), false);	//Obtiene el movimiento a hacer
 		game.mover(mov[0], mov[1], game.getNext(),true);
+		Main.obtenerGo().esTerritorioWR();
 		agregarFicha(mov[0],mov[1]);
 		GUI.loading(false);
 		
@@ -56,7 +57,7 @@ public class Listeners {
 	private static void agregarFicha(int fil, int col){
 		GUI.ponerFicha(((game.getNext().getColor()==true)?true:false), fil, col);
 		game.getTablero().agregarFicha(game.getNext(), fil, col);
-		GUI.actualizarPuntajes(game.getPersona().getNombre(), game.getPersona().getPuntos(), game.getMaquina().getPuntos());
+		GUI.actualizarPuntajes(game.getPersona().getNombre(), game.getPersona().getPuntos()+game.getPersona().getPuntosT(), game.getMaquina().getPuntos()+game.getMaquina().getPuntosT());
 	}
 	
 	
