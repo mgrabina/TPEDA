@@ -77,23 +77,12 @@ public class Go {
 		tablero = new Tablero();
 	}
 
-	public Go(int player, long n, Tablero t, boolean crearDot) {
+	public Go(int player, long n, Tablero t) {
 		this.persona = new Jugador("Jugador", false, false);
 		ko=false;
 		next=this.persona;
 		time = n;
 		tablero = t;
-		
-		int resp[];
-		
-		if(player == 1){
-			resp = MINIMAX(maquina, crearDot);
-		}else{
-			resp = MINIMAX(persona, crearDot);
-		}
-		
-		System.out.println(resp[0] + ", " + resp[1]);
-		
 	}
 	
 	public Go(int player, int n, Tablero t, boolean crearDot) {
@@ -102,17 +91,6 @@ public class Go {
 		next=this.persona;
 		depth = n;
 		tablero = t;
-		
-		int resp[];
-		
-		if(player == 1){
-			resp = MINIMAX(maquina, crearDot);
-		}else{
-			resp = MINIMAX(persona, crearDot);
-		}
-		
-		System.out.println(resp[0] + ", " + resp[1]);
-		
 	}
 
 

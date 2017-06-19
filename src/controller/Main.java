@@ -118,10 +118,34 @@ public class Main {
 								}
 								
 								if((cantidadArgumentos == 7 && args[6].equals("-tree")) || (cantidadArgumentos == 8) && args[7].equals("-tree") ){
-									game = new Go(player, n, t, true);
+									game = new Go(player, n, t);
+									
+									int resp[];
+									
+									if(player == 1){
+										resp = game.MINIMAX(game.getMaquina(), true);
+									}else{
+										resp = game.MINIMAX(game.getPersona(), true);
+									}
+									
+									System.out.println(resp[0] + ", " + resp[1]);
+									
+									
 									return;
 								}
-								game = new Go(player, n, t, false);
+								game = new Go(player, n, t);
+								
+								int resp[];
+								
+								if(player == 1){
+									resp = game.MINIMAX(game.getMaquina(), false);
+								}else{
+									resp = game.MINIMAX(game.getPersona(), false);
+								}
+								
+								System.out.println(resp[0] + ", " + resp[1]);
+								
+								
 								return;
 
 							} catch (NumberFormatException e) {
@@ -148,11 +172,34 @@ public class Main {
 								}
 								
 								if((cantidadArgumentos == 7 && args[6].equals("-tree")) || (cantidadArgumentos == 8) && args[7].equals("-tree") ){
-									game = new Go(player, n, t, true);
+									game = new Go(player, n, t);
+									
+									int resp[];
+									
+									if(player == 1){
+										resp = game.MINIMAX(game.getMaquina(), true);
+									}else{
+										resp = game.MINIMAX(game.getPersona(), true);
+									}
+									
+									System.out.println(resp[0] + ", " + resp[1]);
+									
 									return;
 								}
 								////////
 								game = new Go(player, n, t, false);
+								
+								int resp[];
+								
+								if(player == 1){
+									resp = game.MINIMAX(game.getMaquina(), false);
+								}else{
+									resp = game.MINIMAX(game.getPersona(), false);
+								}
+								
+								System.out.println(resp[0] + ", " + resp[1]);
+								
+								
 								System.out.println(game);
 								return;
 
