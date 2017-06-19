@@ -198,9 +198,7 @@ public class Main {
 								}
 								
 								System.out.println(resp[0] + ", " + resp[1]);
-								
-								
-								System.out.println(game);
+
 								return;
 
 							} catch (NumberFormatException e) {
@@ -247,19 +245,24 @@ public class Main {
 			int c, index=0;
 			Jugador j = new Jugador("Jugador 1", false, false);
 			Jugador m = new Jugador("Jugador 2", true,true);
-			while(index != 169){
+			while(fIn.available() != 0){
 				c = fIn.read();
 				switch (c) {
 				case 49:
 					t.agregarFicha(j, index/13, index%13);
+					index++;
 					break;
 				case 50:
 					t.agregarFicha(m, index/13, index%13);
+					index++;
 					break;
 				}
-				index++;
+				
 			}
 			fIn.close();
+			
+			
+			
 			return t;
 		} catch (Exception e) {
 			System.out.println(e.toString());
