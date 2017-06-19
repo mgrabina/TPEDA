@@ -279,6 +279,7 @@ public class Go {
 	}
 	
 	//devuelve la cantidad de casilleros en un territorio; si devuelve 0 entonces no es territorio
+	
 	private int esTerritorioWR(int fila, int columna, Jugador j, boolean real){
 		List<Pair<Integer, Integer>> marcados = new LinkedList<Pair<Integer, Integer>>();
 		int resp = esTerritorio(fila, columna, marcados);
@@ -381,7 +382,7 @@ public class Go {
 	int[] MINIMAX(Jugador j, boolean crearDot){
 		//Hacer arbol de movimientos, usando la clase tree y move que cuando se crea se asigna su heuristica.
 		Tree<ArrayList<Move>> t = new Tree<ArrayList<Move>>(new ArrayList<Move>());
-		int index;
+		Integer index;
 		
 		//Long start = System.currentTimeMillis();
 		
@@ -392,6 +393,10 @@ public class Go {
 		}
 		
 		//System.out.println(System.currentTimeMillis() - start);
+		
+		
+		if(index == null)
+			return null;
 		
 		ArrayList<Move> movimientosHijo = (ArrayList<Move>)t.getChildren().get(index).getValue();
 		Move movimientoHijo = movimientosHijo.get(((ArrayList<Move>)t.getChildren().get(index).getValue()).size() - 1);
@@ -413,7 +418,7 @@ public class Go {
 
 	//Agregar funciones getMovPosibles(), getMax() y getMin().
 	
-	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color){
+	public Integer minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color){
 		//aplicar heuristica
 		if(currentLevel == depth){
 			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).heuristica(tree.getValue());
@@ -441,10 +446,12 @@ public class Go {
 		for(Tree<ArrayList<Move>> t : tree.getChildren()) //Por cada hijo hay una recursiva
 			minimax(t, depth, currentLevel+1, !color);
 		
+		if(tree.getChildren().size() == 0)
+			return null;
 		
 		//Checkeo Minimax
 		if(currentLevel%2==0) //Nivel par -> max
-		{
+		{	
 			int indexMax = tree.getMaxHeuristica();
 			
 			if(((ArrayList<Move>)tree.getValue()).size() != 0){
