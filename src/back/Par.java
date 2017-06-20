@@ -3,17 +3,21 @@ package back;
 public class Par {
 	Integer x;
 	Integer y;
+
 	public Par(Integer x, Integer y) {
 		super();
 		this.x = x;
 		this.y = y;
 	}
+
 	public Integer getX() {
 		return x;
 	}
+
 	public Integer getY() {
 		return y;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -22,6 +26,7 @@ public class Par {
 		result = prime * result + ((y == null) ? 0 : y.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -44,5 +49,4 @@ public class Par {
 		return true;
 	}
 
-	
 }

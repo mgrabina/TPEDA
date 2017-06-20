@@ -1,4 +1,5 @@
 package controller;
+
 import front.*;
 
 import java.io.EOFException;
@@ -7,9 +8,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import back.*;
+
 public class Main {
 	private static Go game;
-	
+
 	public static void main(String[] args) {
 		// Argumentos
 		// java -jar tpe.jar (-visual | -file archivo -player n) (-maxtime n |
@@ -41,14 +43,14 @@ public class Main {
 						}
 
 						if (cantidadArgumentos == 4) {
-							if(!args[3].equals("-prune")){
+							if (!args[3].equals("-prune")) {
 								mensajeErrorParametros();
 								return;
-							}else
+							} else
 								game = new Go(username(), n, true);
-								
+
 						}
-						
+
 						game = new Go(username(), n, false);
 
 					} catch (NumberFormatException e) {
@@ -70,14 +72,14 @@ public class Main {
 						}
 
 						if (cantidadArgumentos == 4) {
-							if(!args[3].equals("-prune")){
+							if (!args[3].equals("-prune")) {
 								mensajeErrorParametros();
 								return;
-							}else
+							} else
 								game = new Go(username(), n, true);
-								
+
 						}
-						
+
 						game = new Go(username(), n, false);
 
 					} catch (NumberFormatException e) {
@@ -96,13 +98,15 @@ public class Main {
 			}
 			break;
 
-		case 6: case 7: case 8:
+		case 6:
+		case 7:
+		case 8:
 			if (args[0].equals("-file")) {
 				Tablero t = readFile(args[1]);
-				
-				if(t == null)
+
+				if (t == null)
 					return;
-				
+
 				if (args[2].equals("-player")) {
 					int player = Integer.parseInt(args[3]);
 					if (player == 1 || player == 2) {
@@ -119,73 +123,74 @@ public class Main {
 									System.out.println("maxtime muy alto, el maxtime no puede ser mayor a 1000000");
 									return;
 								}
-								
-								if ((cantidadArgumentos == 7 && (!args[6].equals("-tree") && !args[6].equals("-prune"))) || (cantidadArgumentos == 8 && (!args[7].equals("-tree") && !args[6].equals("-prune")))) {
+
+								if ((cantidadArgumentos == 7 && (!args[6].equals("-tree") && !args[6].equals("-prune")))
+										|| (cantidadArgumentos == 8
+												&& (!args[7].equals("-tree") && !args[6].equals("-prune")))) {
 									mensajeErrorParametros();
 									return;
 								}
-								
-								if(cantidadArgumentos == 7 && args[6].equals("-tree") ){
+
+								if (cantidadArgumentos == 7 && args[6].equals("-tree")) {
 									game = new Go(player, n, t, false);
-									
+
 									int resp[];
-									
-									if(player == 1){
+
+									if (player == 1) {
 										resp = game.MINIMAX(game.getMaquina(), true);
-									}else{
+									} else {
 										resp = game.MINIMAX(game.getPersona(), true);
 									}
-									
+
 									System.out.println(resp[0] + ", " + resp[1]);
-									
+
 									return;
 								}
-								
-								if((cantidadArgumentos == 7) && args[6].equals("-prune")){
+
+								if ((cantidadArgumentos == 7) && args[6].equals("-prune")) {
 									game = new Go(player, n, t, true);
-									
+
 									int resp[];
-									
-									if(player == 1){
+
+									if (player == 1) {
 										resp = game.MINIMAX(game.getMaquina(), false);
-									}else{
+									} else {
 										resp = game.MINIMAX(game.getPersona(), false);
 									}
-									
+
 									System.out.println(resp[0] + ", " + resp[1]);
-									
+
 									return;
 								}
-								
-								if(cantidadArgumentos == 8){
+
+								if (cantidadArgumentos == 8) {
 									game = new Go(player, n, t, true);
-									
+
 									int resp[];
-									
-									if(player == 1){
+
+									if (player == 1) {
 										resp = game.MINIMAX(game.getMaquina(), true);
-									}else{
+									} else {
 										resp = game.MINIMAX(game.getPersona(), true);
 									}
-									
+
 									System.out.println(resp[0] + ", " + resp[1]);
-									
+
 									return;
 								}
-								
+
 								game = new Go(player, n, t, false);
-								
+
 								int resp[];
-								
-								if(player == 1){
+
+								if (player == 1) {
 									resp = game.MINIMAX(game.getMaquina(), false);
-								}else{
+								} else {
 									resp = game.MINIMAX(game.getPersona(), false);
 								}
-								
+
 								System.out.println(resp[0] + ", " + resp[1]);
-								
-								
+
 								return;
 
 							} catch (NumberFormatException e) {
@@ -206,72 +211,73 @@ public class Main {
 									return;
 								}
 
-								if ((cantidadArgumentos == 7 && (!args[6].equals("-tree") && !args[6].equals("-prune"))) || (cantidadArgumentos == 8 && (!args[7].equals("-tree") && !args[6].equals("-prune")))) {
+								if ((cantidadArgumentos == 7 && (!args[6].equals("-tree") && !args[6].equals("-prune")))
+										|| (cantidadArgumentos == 8
+												&& (!args[7].equals("-tree") && !args[6].equals("-prune")))) {
 									mensajeErrorParametros();
 									return;
 								}
-								
-								if(cantidadArgumentos == 7 && args[6].equals("-tree") ){
+
+								if (cantidadArgumentos == 7 && args[6].equals("-tree")) {
 									game = new Go(player, n, t, false);
-									
+
 									int resp[];
-									
-									if(player == 1){
+
+									if (player == 1) {
 										resp = game.MINIMAX(game.getMaquina(), true);
-									}else{
+									} else {
 										resp = game.MINIMAX(game.getPersona(), true);
 									}
-									
+
 									System.out.println(resp[0] + ", " + resp[1]);
-									
+
 									return;
 								}
-								
-								if((cantidadArgumentos == 7) && args[6].equals("-prune")){
+
+								if ((cantidadArgumentos == 7) && args[6].equals("-prune")) {
 									game = new Go(player, n, t, true);
-									
+
 									int resp[];
-									
-									if(player == 1){
+
+									if (player == 1) {
 										resp = game.MINIMAX(game.getMaquina(), false);
-									}else{
+									} else {
 										resp = game.MINIMAX(game.getPersona(), false);
 									}
-									
+
 									System.out.println(resp[0] + ", " + resp[1]);
-									
+
 									return;
 								}
-								
-								if(cantidadArgumentos == 8){
+
+								if (cantidadArgumentos == 8) {
 									game = new Go(player, n, t, true);
-									
+
 									int resp[];
-									
-									if(player == 1){
+
+									if (player == 1) {
 										resp = game.MINIMAX(game.getMaquina(), true);
-									}else{
+									} else {
 										resp = game.MINIMAX(game.getPersona(), true);
 									}
-									
+
 									System.out.println(resp[0] + ", " + resp[1]);
-									
+
 									return;
 								}
-								
+
 								game = new Go(player, n, t, false);
-								
+
 								int resp[];
-								
-								if(player == 1){
+
+								if (player == 1) {
 									resp = game.MINIMAX(game.getMaquina(), false);
-								}else{
+								} else {
 									resp = game.MINIMAX(game.getPersona(), false);
 								}
-								
+
 								System.out.println(resp[0] + ", " + resp[1]);
-								
-								
+
 								return;
 
 							} catch (NumberFormatException e) {
@@ -282,11 +288,11 @@ public class Main {
 							mensajeErrorParametros();
 							return;
 						}
-					}else {
+					} else {
 						mensajeErrorParametros();
 						return;
 					}
-				}else {
+				} else {
 					mensajeErrorParametros();
 					return;
 				}
@@ -296,7 +302,7 @@ public class Main {
 				return;
 			}
 		}
-		
+
 		Listeners listener = new Listeners(game);
 
 		// if(args[0]=="visual")
@@ -306,36 +312,34 @@ public class Main {
 		// }
 
 	}
-	
-	private static Tablero readFile(String p){
+
+	private static Tablero readFile(String p) {
 		FileInputStream fIn = null;
 		final String path = System.getProperty("user.dir");
 		try {
 
-			String fullPath = path + "\\"+p;
+			String fullPath = path + "\\" + p;
 			fIn = new FileInputStream(fullPath);
 			Tablero t = new Tablero();
-			int c, index=0;
+			int c, index = 0;
 			Jugador j = new Jugador("Jugador 1", false, false);
-			Jugador m = new Jugador("Jugador 2", true,true);
-			while(fIn.available() != 0){
+			Jugador m = new Jugador("Jugador 2", true, true);
+			while (fIn.available() != 0) {
 				c = fIn.read();
 				switch (c) {
 				case 49:
-					t.agregarFicha(j, index/13, index%13);
+					t.agregarFicha(j, index / 13, index % 13);
 					index++;
 					break;
 				case 50:
-					t.agregarFicha(m, index/13, index%13);
+					t.agregarFicha(m, index / 13, index % 13);
 					index++;
 					break;
 				}
-				
+
 			}
 			fIn.close();
-			
-			
-			
+
 			return t;
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -358,8 +362,6 @@ public class Main {
 				"java -jar tpe.jar (-visual | -file archivo -player n) (-maxtime n | -depth n) [-prune] [-tree]");
 		System.out.println("Saliendo del programa");
 	}
-	
-	
 
 	public static Go obtenerGo() {
 		return game;
