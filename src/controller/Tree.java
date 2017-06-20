@@ -113,41 +113,51 @@ public class Tree<T> {
 		this.children = children;
 	}
 	//INDEXES MAX Y MIN DEL CHILDREN
-		public int getMaxHeuristica(){
+		public int getMaxHeuristica(int alfa, int beta, boolean poda){
 			int index=0;
-			int maxH=-99999;
 			int i;
 			int heuristica = 0;
 			boolean flag=true;
 			LinkedList<Integer> l = new LinkedList<>();
 			for(i=0;i<children.size() && flag;i++){
 				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
-				if(heuristica > maxH){
+				
+				if(heuristica > alfa){
 					l = new LinkedList<>();
 					l.add(i);
-					maxH = heuristica;
+					alfa = heuristica;
 					//if(maxH>0)
 						//flag=false;
-				}else if(heuristica == maxH) l.add(i);
+				}else if(heuristica == alfa) l.add(i);
+				
+				if(poda)
+					if(alfa >= beta)
+						return l.get(new Random().nextInt(l.size()));
+				
 			}
 			return l.get(new Random().nextInt(l.size()));
 		}
-		public int getMinHeuristica(){
+		public int getMinHeuristica(int alfa, int beta, boolean poda){
 			int index=0;
-			int minH = 999999; //Inalcanzable por heuristica
 			int i;
 			int heuristica = 0;
 			boolean flag=true;
 			LinkedList<Integer> l = new LinkedList<>();
 			for(i=0;i<children.size() && flag ;i++){
 				heuristica = ((ArrayList<Move>)children.get(i).getValue()).get(((ArrayList<Move>)children.get(i).getValue()).size() - 1).getHeuristica();
-				if(heuristica < minH){
+				
+				if(heuristica < beta){
 					l = new LinkedList<>();
 					l.add(i);
-					minH = heuristica;
+					beta = heuristica;
 					//if(minH<0)
 						//flag=false;
-				}else if(heuristica == minH) l.add(i);
+				}else if(heuristica == beta) l.add(i);
+				
+				if(poda)
+					if(alfa <= beta)
+						return l.get(new Random().nextInt(l.size()));
+				
 			}
 			return l.get(new Random().nextInt(l.size()));
 		}

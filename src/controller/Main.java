@@ -40,12 +40,16 @@ public class Main {
 							return;
 						}
 
-						if (cantidadArgumentos == 4 && !args[3].equals("-prune")) {
-							mensajeErrorParametros();
-							return;
+						if (cantidadArgumentos == 4) {
+							if(!args[3].equals("-prune")){
+								mensajeErrorParametros();
+								return;
+							}else
+								game = new Go(username(), n, true);
+								
 						}
-
-						game = new Go(username(), n);
+						
+						game = new Go(username(), n, false);
 
 					} catch (NumberFormatException e) {
 						mensajeErrorParametros();
@@ -65,12 +69,16 @@ public class Main {
 							return;
 						}
 
-						if (cantidadArgumentos == 4 && !args[3].equals("-prune")) {
-							mensajeErrorParametros();
-							return;
+						if (cantidadArgumentos == 4) {
+							if(!args[3].equals("-prune")){
+								mensajeErrorParametros();
+								return;
+							}else
+								game = new Go(username(), n, true);
+								
 						}
-
-						game = new Go(username(), n);
+						
+						game = new Go(username(), n, false);
 
 					} catch (NumberFormatException e) {
 						mensajeErrorParametros();
@@ -117,8 +125,8 @@ public class Main {
 									return;
 								}
 								
-								if((cantidadArgumentos == 7 && args[6].equals("-tree")) || (cantidadArgumentos == 8) && args[7].equals("-tree") ){
-									game = new Go(player, n, t);
+								if(cantidadArgumentos == 7 && args[6].equals("-tree") ){
+									game = new Go(player, n, t, false);
 									
 									int resp[];
 									
@@ -130,10 +138,42 @@ public class Main {
 									
 									System.out.println(resp[0] + ", " + resp[1]);
 									
+									return;
+								}
+								
+								if((cantidadArgumentos == 7) && args[6].equals("-prune")){
+									game = new Go(player, n, t, true);
+									
+									int resp[];
+									
+									if(player == 1){
+										resp = game.MINIMAX(game.getMaquina(), false);
+									}else{
+										resp = game.MINIMAX(game.getPersona(), false);
+									}
+									
+									System.out.println(resp[0] + ", " + resp[1]);
 									
 									return;
 								}
-								game = new Go(player, n, t);
+								
+								if(cantidadArgumentos == 8){
+									game = new Go(player, n, t, true);
+									
+									int resp[];
+									
+									if(player == 1){
+										resp = game.MINIMAX(game.getMaquina(), true);
+									}else{
+										resp = game.MINIMAX(game.getPersona(), true);
+									}
+									
+									System.out.println(resp[0] + ", " + resp[1]);
+									
+									return;
+								}
+								
+								game = new Go(player, n, t, false);
 								
 								int resp[];
 								
@@ -171,8 +211,8 @@ public class Main {
 									return;
 								}
 								
-								if((cantidadArgumentos == 7 && args[6].equals("-tree")) || (cantidadArgumentos == 8) && args[7].equals("-tree") ){
-									game = new Go(player, n, t);
+								if(cantidadArgumentos == 7 && args[6].equals("-tree") ){
+									game = new Go(player, n, t, false);
 									
 									int resp[];
 									
@@ -186,7 +226,39 @@ public class Main {
 									
 									return;
 								}
-								////////
+								
+								if((cantidadArgumentos == 7) && args[6].equals("-prune")){
+									game = new Go(player, n, t, true);
+									
+									int resp[];
+									
+									if(player == 1){
+										resp = game.MINIMAX(game.getMaquina(), false);
+									}else{
+										resp = game.MINIMAX(game.getPersona(), false);
+									}
+									
+									System.out.println(resp[0] + ", " + resp[1]);
+									
+									return;
+								}
+								
+								if(cantidadArgumentos == 8){
+									game = new Go(player, n, t, true);
+									
+									int resp[];
+									
+									if(player == 1){
+										resp = game.MINIMAX(game.getMaquina(), true);
+									}else{
+										resp = game.MINIMAX(game.getPersona(), true);
+									}
+									
+									System.out.println(resp[0] + ", " + resp[1]);
+									
+									return;
+								}
+								
 								game = new Go(player, n, t, false);
 								
 								int resp[];
@@ -198,7 +270,8 @@ public class Main {
 								}
 								
 								System.out.println(resp[0] + ", " + resp[1]);
-
+								
+								
 								return;
 
 							} catch (NumberFormatException e) {

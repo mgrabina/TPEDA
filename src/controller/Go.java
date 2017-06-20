@@ -16,7 +16,7 @@ import javafx.util.Pair;
 import sun.misc.Queue;
 
 public class Go {
-
+	
 	private static final int DEPTHDEFAULT = 2;
 	private Jugador maquina = new Jugador("Maquina", true,true);
 	private Jugador persona;
@@ -24,6 +24,7 @@ public class Go {
 	private Long time = null;
 	private Integer depth = null;
 	private Tablero tablero;
+	private boolean poda;
 	boolean ko;
 	LinkedList<Ficha> fichasacomer=new LinkedList<Ficha>();
 	LinkedList<Ficha> fichascomidas=new LinkedList<Ficha>();
@@ -56,46 +57,42 @@ public class Go {
 		this.depth = depth;
 	}
 
-	public Go(String persona){
-		this.persona = new Jugador(persona, false, false);
-		ko=false;
-		next=this.persona;
-		tablero = new Tablero();
-	}
-	
-	public Go(String username, long n) {
+	public Go(String username, long n, boolean prune) {
 		this.persona = new Jugador(username, false, false);
 		ko=false;
 		next=this.persona;
 		time = n;
 		tablero = new Tablero();
+		poda = prune;
 	}
 	
-	public Go(String username, int n) {
+	public Go(String username, int n, boolean prune) {
 		this.persona = new Jugador(username, false, false);
 		ko=false;
 		next=this.persona;
 		depth = n;
 		tablero = new Tablero();
-	}
-
-	public Go(int player, long n, Tablero t) {
-		this.persona = new Jugador("Jugador", false, false);
-		ko=false;
-		next=this.persona;
-		time = n;
-		tablero = t;
+		poda = prune;
 	}
 	
-	public Go(int player, int n, Tablero t, boolean crearDot) {
+	public Go(int player, int n, Tablero t, boolean prune) {
 		this.persona = new Jugador("Jugador", false, false);
 		ko=false;
 		next=this.persona;
 		depth = n;
 		tablero = t;
+		poda = prune;
 	}
 
-
+	public Go(int player, long n, Tablero t, boolean prune) {
+		this.persona = new Jugador("Jugador", false, false);
+		ko=false;
+		next=this.persona;
+		time = n;
+		tablero = t;
+		poda = prune;
+	}
+	
 	public boolean mover(int fila, int columna, Jugador j,boolean real){
 		boolean a;
 		boolean b;
@@ -391,10 +388,13 @@ public class Go {
 		
 		//Long start = System.currentTimeMillis();
 		
+		//inalcanzables por la heurística
+		int alfa = -99999, beta = 99999;
+		
 		if(depth != null){
-			index = minimax(t, depth, 0, j.getColor());
+			index = minimax(t, depth, 0, j.getColor(), alfa, beta);
 		}else{
-			index = minimax(t,DEPTHDEFAULT, 0, j.getColor(), time);
+			index = minimax(t,DEPTHDEFAULT, 0, j.getColor(), time, alfa, beta);
 		}
 		
 		//System.out.println(System.currentTimeMillis() - start);
@@ -423,7 +423,7 @@ public class Go {
 
 	//Agregar funciones getMovPosibles(), getMax() y getMin().
 	
-	public Integer minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color){
+	public Integer minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color, int alfa, int beta){
 		//aplicar heuristica
 		if(currentLevel == depth){
 			int heuristicaDeLaHoja = ((ArrayList<Move>)tree.getValue()).get(((ArrayList<Move>) tree.getValue()).size() - 1).heuristica(tree.getValue());
@@ -448,16 +448,18 @@ public class Go {
 				}
 			}
 		}
-		for(Tree<ArrayList<Move>> t : tree.getChildren()) //Por cada hijo hay una recursiva
-			minimax(t, depth, currentLevel+1, !color);
-		
+
+		//Por cada hijo hay una recursiva
+		for(Tree<ArrayList<Move>> t : tree.getChildren()) 
+			minimax(t, depth, currentLevel+1, !color, alfa, beta);
+			
 		if(tree.getChildren().size() == 0)
 			return null;
 		
 		//Checkeo Minimax
 		if(currentLevel%2==0) //Nivel par -> max
 		{	
-			int indexMax = tree.getMaxHeuristica();
+			int indexMax = tree.getMaxHeuristica(alfa, beta, poda);
 			
 			if(((ArrayList<Move>)tree.getValue()).size() != 0){
 				
@@ -481,7 +483,7 @@ public class Go {
 			return indexMax;
 				
 		}else{					//Nivel impar -> min
-			int indexMin = tree.getMinHeuristica();
+			int indexMin = tree.getMinHeuristica(alfa, beta, poda);
 			
 			if(((ArrayList<Move>)tree.getValue()).size() != 0){
 				
@@ -506,7 +508,7 @@ public class Go {
 		}
 	}
 	
-	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color, Long time){
+	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color, Long time, int alfa, int beta){
 		Double start = (double) (System.currentTimeMillis()/1000);
 		//aplicar heuristica
 		if(currentLevel == depth){
@@ -535,14 +537,14 @@ public class Go {
 		
 		while(System.currentTimeMillis()/1000 - start < time){
 			for(Tree<ArrayList<Move>> t : tree.getChildren()) //Por cada hijo hay una recursiva
-				minimax(t, depth, currentLevel+1, !color);
+				minimax(t, depth, currentLevel+1, !color, alfa, beta);
 		}
 				
 				
 		//Checkeo Minimax
 		if(currentLevel%2==0) //Nivel par -> max
 		{
-			int indexMax = tree.getMaxHeuristica();
+			int indexMax = tree.getMaxHeuristica(alfa, beta, poda);
 					
 			if(((ArrayList<Move>)tree.getValue()).size() != 0){
 						
@@ -564,7 +566,7 @@ public class Go {
 			return indexMax;
 						
 		}else{					//Nivel impar -> min
-			int indexMin = tree.getMinHeuristica();
+			int indexMin = tree.getMinHeuristica(alfa, beta, poda);
 					
 			if(((ArrayList<Move>)tree.getValue()).size() != 0){
 						
