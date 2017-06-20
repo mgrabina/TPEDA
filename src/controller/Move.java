@@ -52,11 +52,24 @@ public class Move {
 			j=Main.obtenerGo().getPersona();
 		Main.obtenerGo().mover(f.getFila(), f.getColumna(), j,false);
 		//calculamos la heuristica
+		
+		
 		heuristica = (Main.obtenerGo().obtenerPuntajes()-punt)*50;
-		if(Main.obtenerGo().getTablero().getFichast()>=40){
-			Main.obtenerGo().esTerritorioWR();
-			heuristica+=(Main.obtenerGo().getMaquina().getPuntosT()-Main.obtenerGo().getPersona().getPuntosT());
-		}
+		//System.out.println(heuristica);
+		if(f.getColor())
+			heuristica+=(Main.obtenerGo().cadena(f.getFila(), f.getColumna(), true)>1)?10:0;
+		else{
+			Ficha fich=movimientosAnteriores.get(movimientosAnteriores.size()-1).f;
+			heuristica+=(Main.obtenerGo().cadena(fich.getFila(), fich.getColumna(), true)>1)?10:1;
+		}	
+		System.out.println(heuristica);
+		//if(Main.obtenerGo().getTablero().getFichast()>=40){
+		Main.obtenerGo().esTerritorioWR();
+		heuristica+=(Main.obtenerGo().getMaquina().getPuntosT()-Main.obtenerGo().getPersona().getPuntosT())*20;
+		//}
+		
+		
+		
 		//seteamos el tablero original
 		for(List<Ficha> l: set){
 			for(Ficha f: l){
@@ -72,7 +85,7 @@ public class Move {
 		}
 		Main.obtenerGo().getMaquina().setPuntos(puntm);
 		Main.obtenerGo().getPersona().setPuntos(puntj);
-		System.out.println(heuristica);
+		//System.out.println(heuristica);
 		
 		
 		return heuristica;

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -618,6 +619,51 @@ public class Go {
 		
 		return false;
 	}
+	public int cadena(int x, int y,boolean j){
+		marcados.clear();
+		return cadenaR(x, y, j);
+	}
+	
+	private int cadenaR(int x, int y, boolean j){
+		int	izq = (y == 0)?0:1;
+		int der = (y == 12)?0:1;
+		int arr = (x == 0)?0:1;
+		int abj = (x == 12)?0:1;
+		marcados.add(new Par(x, y));
+		int acum=0;
+		if(izq==1)
+			if(tablero.getFicha(x,y-1)!=null && tablero.getFicha(x,y-1).getColor()==j)
+				if(!marcados.contains(new Par(x,y-1)))
+					acum+=cadenaR(x, y-1, j);
+		if(der==1)
+			if(tablero.getFicha(x,y+1)!=null && tablero.getFicha(x,y+1).getColor()==j)
+				if(!marcados.contains(new Par(x,y+1)))
+					acum+=cadenaR(x, y+1, j);
+		if(arr==1)
+			if(tablero.getFicha(x-1,y)!=null && tablero.getFicha(x-1,y).getColor()==j)
+				if(!marcados.contains(new Par(x-1,y)))
+					acum+=cadenaR(x-1, y, j);
+		if(abj==1)
+			if(tablero.getFicha(x+1,y)!=null && tablero.getFicha(x+1,y).getColor()==j)
+				if(!marcados.contains(new Par(x+1,y)))
+					acum+=cadenaR(x+1, y, j);
+		return 1+acum;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
