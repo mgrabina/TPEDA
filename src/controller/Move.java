@@ -59,8 +59,8 @@ public class Move {
 		if(f.getColor())
 			heuristica+=(Main.obtenerGo().cadena(f.getFila(), f.getColumna(), true)>1)?10:0;
 		else{
-			Ficha fich=movimientosAnteriores.get(movimientosAnteriores.size()-1).f;
-			heuristica+=(Main.obtenerGo().cadena(fich.getFila(), fich.getColumna(), true)>1)?10:1;
+			Ficha fich=movimientosAnteriores.get(movimientosAnteriores.size()-2).f;
+			heuristica+=(Main.obtenerGo().cadena(fich.getFila(), fich.getColumna(), true)>1)?10:0;
 		}	
 		System.out.println(heuristica);
 		//if(Main.obtenerGo().getTablero().getFichast()>=40){

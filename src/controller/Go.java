@@ -619,7 +619,8 @@ public class Go {
 		
 		return false;
 	}
-	public int cadena(int x, int y,boolean j){
+
+	public int cadena(int x, int y, boolean j){
 		marcados.clear();
 		return cadenaR(x, y, j);
 	}
