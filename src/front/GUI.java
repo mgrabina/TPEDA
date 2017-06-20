@@ -62,7 +62,7 @@ public class GUI {
 		titulo.setForeground(Color.white);
 		titulo.setFont(new Font("Verdana", Font.BOLD, 50));
 
-		JLabel pie = new JLabel("Varela - Tay - Grethe - Grabina - Mosquera");
+		JLabel pie = new JLabel("Varela - Tay - Grethe - Grabina");
 		pie.setBounds(0, 900, 500, 100);
 		pie.setHorizontalAlignment((int) pie.CENTER_ALIGNMENT);
 		pie.setForeground(Color.black);
