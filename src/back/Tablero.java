@@ -40,10 +40,10 @@ public class Tablero {
 	public Tablero clone() {
 		Tablero t = new Tablero();
 		Jugador j;
+		
 		for (int x = 0; x < 13; x++)
 			for (int y = 0; y < 13; y++) {
 				if (tablero[x][y] != null) {
-
 					if (tablero[x][y].getColor())
 						j = Main.obtenerGo().getMaquina();
 					else
@@ -51,6 +51,7 @@ public class Tablero {
 					t.agregarFicha(j, x, y);
 				}
 			}
+		
 		return t;
 	}
 

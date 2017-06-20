@@ -97,15 +97,19 @@ public class Go {
 	public boolean mover(int fila, int columna, Jugador j, boolean real) {
 		boolean a;
 		boolean b;
+		
 		if (tablero.getFicha(fila, columna) != null)
 			return false;
+		
 		fichasacomer.clear();
 		fichascomidas.clear();
 		a = puedoComerFichas(fila, columna, j);
 		b = noEsSuicidio(fila, columna, j);
+		
 		if (a == true && b == false && ko == true && knock.getFila() == fila && knock.getColumna() == columna) {
 			return false;
 		}
+		
 		if (a == true && b == false) {
 			ko = true;
 			knock = fichasacomer.get(0);
@@ -113,6 +117,7 @@ public class Go {
 			ko = false;
 			knock = null;
 		}
+		
 		if (a) {
 			tablero.agregarFicha(j, fila, columna);
 			for (Ficha fic : fichasacomer) {
@@ -121,11 +126,13 @@ public class Go {
 
 			return true;
 		}
+		
 		if (b) {
 			tablero.agregarFicha(j, fila, columna);
 
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -199,6 +206,7 @@ public class Go {
 
 		tablero.sacarFicha(fila, columna);
 		fichascomidas.add(new Ficha(color, fila, columna));
+		
 		if (real)
 			GUI.sacarFicha(fila, columna);
 
@@ -233,15 +241,16 @@ public class Go {
 	}
 
 	private boolean tieneLibertad(int fil, int col, boolean color, List<Ficha> marcados) {
-
 		int izq, der, arr, abj;
 		Ficha f;
 		marcados.add(tablero.getFicha(fil, col));
+		
 		izq = (col == 0) ? 0 : 1;
 		der = (12 == col) ? 0 : 1;
 		arr = (fil == 0) ? 0 : 1;
 		abj = (12 == fil) ? 0 : 1;
 		boolean flag;
+		
 		for (int l = col - izq; l <= col + der; l++) {
 			f = tablero.getFicha(fil, l);
 			if (f != null && f.getColor() == color && !marcados.contains(f)) {
@@ -252,6 +261,7 @@ public class Go {
 				return true;
 			}
 		}
+		
 		if (arr == 1) {
 			f = tablero.getFicha(fil - 1, col);
 			if (f != null && f.getColor() == color && !marcados.contains(f)) {
@@ -262,6 +272,7 @@ public class Go {
 				return true;
 			}
 		}
+		
 		if (abj == 1) {
 			f = tablero.getFicha(fil + 1, col);
 			if (f != null && f.getColor() == color && !marcados.contains(f)) {
@@ -272,6 +283,7 @@ public class Go {
 				return true;
 			}
 		}
+		
 		return false;
 	}
 
@@ -284,6 +296,7 @@ public class Go {
 		marcados.clear();
 		maquina.setPuntosT(0);
 		persona.setPuntosT(0);
+		
 		for (int x = 0; x < 13; x++)
 			for (int y = 0; y < 13; y++) {
 				if (tablero.getFicha(x, y) == null && !marcados.contains(new Par(x, y))) {
@@ -291,6 +304,7 @@ public class Go {
 					estado = 0;
 					esTerritorio(x, y);
 					int punt = marcados.size() - size;
+					
 					if (estado == 1) {
 						maquina.setPuntosT(maquina.getPuntosT() + punt);
 					} else if (estado == -1) {
@@ -307,6 +321,7 @@ public class Go {
 		int der = (y == 12) ? 0 : 1;
 		int arr = (x == 0) ? 0 : 1;
 		int abj = (x == 12) ? 0 : 1;
+		
 		if (estado != -2) {
 			for (int col = y - izq; col <= y + der; col++) {
 				if (tablero.getFicha(x, col) != null && col != y) {
@@ -324,6 +339,7 @@ public class Go {
 					}
 				}
 			}
+			
 			if (arr == 1) {
 				if (tablero.getFicha(x - 1, y) != null) {
 					if (tablero.getFicha(x - 1, y).getColor()) {
@@ -339,6 +355,7 @@ public class Go {
 					}
 				}
 			}
+			
 			if (abj == 1) {
 				if (tablero.getFicha(x + 1, y) != null) {
 					if (tablero.getFicha(x + 1, y).getColor()) {
@@ -355,16 +372,19 @@ public class Go {
 				}
 			}
 		}
+		
 		for (int col = y - izq; col <= y + der; col++)
 			if (tablero.getFicha(x, col) == null)
 				if (!marcados.contains(new Par(x, col))) {
 					esTerritorio(x, col);
 				}
+		
 		if (arr == 1)
 			if (tablero.getFicha(x - 1, y) == null)
 				if (!marcados.contains(new Par(x - 1, y))) {
 					esTerritorio(x - 1, y);
 				}
+		
 		if (abj == 1)
 			if (tablero.getFicha(x + 1, y) == null)
 				if (!marcados.contains(new Par(x + 1, y))) {
@@ -397,6 +417,7 @@ public class Go {
 
 		ArrayList<Move> movimientosHijo = (ArrayList<Move>) t.getChildren().get(index).getValue();
 		Move movimientoHijo = movimientosHijo.get(((ArrayList<Move>) t.getChildren().get(index).getValue()).size() - 1);
+		
 		if (crearDot) {
 			try {
 				t.generarDOT();
@@ -406,6 +427,7 @@ public class Go {
 				System.out.println("Se interrumpió la creación del .dot");
 			}
 		}
+		
 		Ficha f = movimientoHijo.getFicha();
 		int a[] = new int[2];
 		a[0] = f.getFila();
@@ -430,6 +452,7 @@ public class Go {
 				// Obtengo los movimientos posibles
 				Ficha f;
 				f = intentoPonerFicha(new Ficha(color, i, j));
+				
 				if (f != null && !((ArrayList<Move>) tree.getValue()).contains(new Move(f))) {
 					// Por cada movimiento posible creo un hijo con los
 					// movimientos viejos + el movimiento posible
@@ -437,7 +460,6 @@ public class Go {
 					movimientosAnteriores.add(new Move(f));
 
 					tree.getChildren().add(new Tree<ArrayList<Move>>(movimientosAnteriores));
-
 				}
 			}
 		}
@@ -504,6 +526,7 @@ public class Go {
 	public int minimax(Tree<ArrayList<Move>> tree, int depth, int currentLevel, boolean color, Long time, int alfa,
 			int beta) {
 		Double start = (double) (System.currentTimeMillis() / 1000);
+		
 		// aplicar heuristica
 		if (currentLevel == depth) {
 			int heuristicaDeLaHoja = ((ArrayList<Move>) tree.getValue())
@@ -520,6 +543,7 @@ public class Go {
 				// Obtengo los movimientos posibles
 				Ficha f;
 				f = intentoPonerFicha(new Ficha(color, i, j));
+				
 				if (f != null && !((ArrayList<Move>) tree.getValue()).contains(new Move(f))) {
 					// Por cada movimiento posible creo un hijo con los
 					// movimientos viejos + el movimiento posible
@@ -527,7 +551,6 @@ public class Go {
 					movimientosAnteriores.add(new Move(f));
 
 					tree.getChildren().add(new Tree<ArrayList<Move>>(movimientosAnteriores));
-
 				}
 			}
 		}
@@ -597,14 +620,18 @@ public class Go {
 	private boolean moverSinComer(int fila, int columna, Jugador j) {
 		boolean a;
 		boolean b;
+		
 		if (tablero.getFicha(fila, columna) != null)
 			return false;
+		
 		fichasacomer.clear();
 		a = puedoComerFichas(fila, columna, j);
 		b = noEsSuicidio(fila, columna, j);
+		
 		if (a == true && b == false && ko == true && knock.getFila() == fila && knock.getColumna() == columna) {
 			return false;
 		}
+		
 		if (a == true && b == false) {
 			ko = true;
 			knock = fichasacomer.get(0);
@@ -612,8 +639,10 @@ public class Go {
 			ko = false;
 			knock = null;
 		}
+		
 		if (a)
 			return true;
+		
 		if (b)
 			return true;
 
@@ -630,24 +659,30 @@ public class Go {
 		int der = (y == 12) ? 0 : 1;
 		int arr = (x == 0) ? 0 : 1;
 		int abj = (x == 12) ? 0 : 1;
+		
 		marcados.add(new Par(x, y));
 		int acum = 0;
+		
 		if (izq == 1)
 			if (tablero.getFicha(x, y - 1) != null && tablero.getFicha(x, y - 1).getColor() == j)
 				if (!marcados.contains(new Par(x, y - 1)))
 					acum += cadenaR(x, y - 1, j);
+		
 		if (der == 1)
 			if (tablero.getFicha(x, y + 1) != null && tablero.getFicha(x, y + 1).getColor() == j)
 				if (!marcados.contains(new Par(x, y + 1)))
 					acum += cadenaR(x, y + 1, j);
+		
 		if (arr == 1)
 			if (tablero.getFicha(x - 1, y) != null && tablero.getFicha(x - 1, y).getColor() == j)
 				if (!marcados.contains(new Par(x - 1, y)))
 					acum += cadenaR(x - 1, y, j);
+		
 		if (abj == 1)
 			if (tablero.getFicha(x + 1, y) != null && tablero.getFicha(x + 1, y).getColor() == j)
 				if (!marcados.contains(new Par(x + 1, y)))
 					acum += cadenaR(x + 1, y, j);
+		
 		return 1 + acum;
 	}
 

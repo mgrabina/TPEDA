@@ -6,7 +6,6 @@ import front.GUI;
 
 public class Listeners {
 	private static boolean paso = false;
-
 	private static Go game;
 
 	public Listeners(Go game) {
@@ -37,6 +36,7 @@ public class Listeners {
 
 	private static void turnoMaquina() {
 		int mov[] = new int[2];
+		
 		// Turno Maquina
 		game.setNext(game.getMaquina());
 		mov = game.MINIMAX(game.getNext(), false); // Obtiene el movimiento a
@@ -63,8 +63,8 @@ public class Listeners {
 				agregarFicha(fil, col);
 				long a = System.currentTimeMillis();
 				turnoMaquina();
+				
 				// Vuelve a persona
-
 				game.setNext(game.getPersona());
 			} else {
 				GUI.alertarGanador("Movimiento no valido.");
